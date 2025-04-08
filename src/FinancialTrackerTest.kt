@@ -8,7 +8,7 @@ fun main() {
     print("hello")
 
     // start region for view transaction
-    // get by id
+    // get transaction by id
 
     val memoryFinancialTrackerStorage = MemoryFinancialTrackerStorage()
     check(
@@ -31,6 +31,26 @@ fun main() {
         name = "when user send zero, return false",
         result = memoryFinancialTrackerStorage.getTransactionById(0) != null,
         expectedResult = false
+    )
+
+
+    // get all transaction
+
+    val listSize = memoryFinancialTrackerStorage.getAllTransactions()?.size
+    check(
+        name = "when transaction list has data, return true",
+        result = listSize != null && listSize != 0,
+        expectedResult = true
+    )
+    check(
+        name = "when list in init but has no data, return true",
+        result = listSize == 0,
+        expectedResult = true
+    )
+    check(
+        name = "when transaction list is empty, return true",
+        result = memoryFinancialTrackerStorage.getAllTransactions() == emptyList<Transaction>(),
+        expectedResult = true
     )
 
     // end region for view transaction

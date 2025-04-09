@@ -20,6 +20,7 @@ fun check(name: String, result: Boolean, expectedResult: Boolean) {
 fun testGetTransactionMonthlyReport() {
     val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
     val financialTracker = FinancialTracker(financialTrackerStorage)
+
     /** Invalid test cases */
     check(
         name = "When have negative number like -1 it should return null",
@@ -47,7 +48,7 @@ fun testGetTransactionMonthlyReport() {
         expectedResult = true
     )
     check(
-        name = "When have charchter like A it should return null",
+        name = "When have character like A it should return null",
         result = financialTracker.getTransactionByMonth("A") == null,
         expectedResult = true
     )
@@ -102,8 +103,6 @@ fun testGetTransactionMonthlyReport() {
         expectedResult = true
     )
 
-
-
     /** Valid test cases */
     check(
         name = "When we have number like 1 and exists in memory {1, 6, 8} it should return transaction list not empty",
@@ -126,11 +125,4 @@ fun testGetTransactionMonthlyReport() {
         result = financialTracker.getTransactionByMonth("2")?.isNotEmpty() == true,
         expectedResult = true
     )
-
-    check(
-        name = "When we have number like ١ and exists in memory {1, 6, 8} it should return transaction list not empty",
-        result = financialTracker.getTransactionByMonth("1")?.isNotEmpty() == true,
-        expectedResult = true
-    )
-
 }

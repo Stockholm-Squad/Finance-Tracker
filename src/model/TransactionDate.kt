@@ -1,4 +1,4 @@
-package src.model
+package model
 
 data class TransactionDate(
     val day: Int,

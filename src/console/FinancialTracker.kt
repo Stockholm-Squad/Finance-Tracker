@@ -1,7 +1,6 @@
-package src.console
+package console
 
-import src.model.Transaction
-import src.storage.IFinancialTrackerStorage
+import storage.IFinancialTrackerStorage
 
 class FinancialTracker(val iFinancialTrackerStorage: IFinancialTrackerStorage) {
 

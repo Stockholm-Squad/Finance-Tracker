@@ -19,9 +19,10 @@ fun testUpdateTransaction() {
         return financialTrackerStorage.getTransactionById(id) != null
     }
 
+
     // Valid (ID)
     check(
-        name = "When user update existing transaction should return true",
+        name = "When id valid should return true",
         result = isValidTransactionId("1"),
         correctResult = true
     )
@@ -63,16 +64,85 @@ fun testUpdateTransaction() {
         correctResult = false
     )
 
+    // Valid Category
     check(
-        name = "Update category successfully",
-        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.CATEGORY, "Groceries"),
+        name = "When category is valid should return true",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.CATEGORY, "Food"),
         correctResult = true
     )
 
+    check(
+        name = "When category start & end with space should return true",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.CATEGORY, " Food "),
+        correctResult = true
+    )
+
+    check(
+        name = "When category is empty should return false",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.CATEGORY, ""),
+        correctResult = false
+    )
+
+    check(
+        name = "When category has space at middle should return false",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.CATEGORY, "Fo od"),
+        correctResult = false
+    )
+
+    check(
+        name = "When category has special character should return false",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.CATEGORY, "Fo@od"),
+        correctResult = false
+    )
+
+    check(
+        name = "When category has number should return false",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.CATEGORY, "F235ood"),
+        correctResult = false
+    )
 
 
+    // Valid Transaction Type
+    check(
+        name = "When type is valid should return true",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.TYPE, "1"),
+        correctResult = true
+    )
 
+    check(
+        name = "When type start & end with space should return true",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.TYPE, " 1 "),
+        correctResult = true
+    )
 
+    // InValid Type
+    check(
+        name = "When type more than 1 digit should return false",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.TYPE, "12"),
+        correctResult = false
+    )
+
+    check(
+        name = "When type has special char should return false",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.TYPE, "@"),
+        correctResult = false
+    )
+    check(
+        name = "When type is empty should return false",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.TYPE, ""),
+        correctResult = false
+    )
+    check(
+        name = "When type char should return false",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.TYPE, "a"),
+        correctResult = false
+    )
+
+    check(
+        name = "When type out of range should return false",
+        result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.TYPE, "3"),
+        correctResult = false
+    )
 
 }
 

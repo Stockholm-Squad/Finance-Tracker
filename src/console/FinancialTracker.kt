@@ -5,4 +5,5 @@ import src.storage.IFinancialTrackerStorage
 
 class FinancialTracker(val iFinancialTrackerStorage: IFinancialTrackerStorage) {
 
+
 }

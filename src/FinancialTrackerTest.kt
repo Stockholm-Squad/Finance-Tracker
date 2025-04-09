@@ -1,8 +1,5 @@
 fun main() {
-
     testCaseForDeleteTransaction()
-
-
 }
 
 fun check(name: String, result: Boolean, expectedResult: Boolean) {

@@ -1,9 +1,10 @@
 package src
 
+import model.Transaction
 import src.console.FinancialTracker
-import src.model.Transaction
-import src.storage.IFinancialTrackerStorage
-import src.storage.MemoryFinancialTrackerStorage
+
+import storage.IFinancialTrackerStorage
+import storage.MemoryFinancialTrackerStorage
 
 
 fun main() {

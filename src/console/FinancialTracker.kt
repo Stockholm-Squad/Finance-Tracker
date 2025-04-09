@@ -1,10 +1,11 @@
 package src.console
 
-import src.model.Transaction
-import src.storage.IFinancialTrackerStorage
+import model.Transaction
+
+import storage.IFinancialTrackerStorage
 
 class FinancialTracker(val iFinancialTrackerStorage: IFinancialTrackerStorage) {
-    fun getTransactionById(transactionId:Int):Transaction?{
+    fun getTransactionById(transactionId:Int): Transaction?{
         return null
     }
 

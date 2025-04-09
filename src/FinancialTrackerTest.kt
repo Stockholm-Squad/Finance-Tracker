@@ -124,7 +124,6 @@ fun testUpdateTransaction() {
         correctResult = false
     )
 
-
     // Valid Transaction Category
     check(
         name = "When category is valid should return true",

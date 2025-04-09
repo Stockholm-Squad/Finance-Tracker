@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ develop ]
     paths:
-      - 'src/console/FinancialTracker.kt'
+      - 'src/common.console/FinancialTracker.kt'
       - 'src/FinancialTrackerTest.kt'
 
 jobs:

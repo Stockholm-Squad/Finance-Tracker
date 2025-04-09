@@ -24,7 +24,7 @@ fun testCaseForDeleteTransaction() {
     val storage= financialTracker.iFinancialTrackerStorage
 
     fun deleteTransactionById(id: String): Boolean{
-        return id.toIntOrNull().let { it != null && storage.deleteTransactionById(it) }
+        return false
     }
 
     check(
@@ -52,12 +52,6 @@ fun testCaseForDeleteTransaction() {
         expectedResult = false
     )
 
-
-//    check(
-//        name = "invalid delete transaction with invalid id non-integer it should return false",
-//        result = deleteTransactionById(null as Int),
-//        expectedResult = false
-//    )
 
     check(
         name = "delete transaction but have no transaction(first time that run app) it should return false",

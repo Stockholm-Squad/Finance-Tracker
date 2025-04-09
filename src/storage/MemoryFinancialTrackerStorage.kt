@@ -1,7 +1,7 @@
 package src.storage
 
 import src.model.Transaction
-import src.model.TransactionUpdateType
+import src.model.TransactionCheckInput
 import java.util.Collections.emptyList
 
 class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
@@ -14,7 +14,7 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
         return true
     }
 
-    override fun updateTransaction(transactionId: Int, field: TransactionUpdateType, newValue: String): Boolean {
+    override fun updateTransaction(transactionId: Int, field: TransactionCheckInput, newValue: String): Boolean {
         return true
     }
 

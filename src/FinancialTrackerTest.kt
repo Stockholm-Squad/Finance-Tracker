@@ -189,11 +189,13 @@ fun testUpdateTransaction() {
         result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, "@"),
         correctResult = false
     )
+
     check(
         name = "When type is empty should return false",
         result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, ""),
         correctResult = false
     )
+
     check(
         name = "When type char should return false",
         result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, "a"),
@@ -270,8 +272,185 @@ fun testUpdateTransaction() {
         correctResult = false
     )
 
-    // endregion
+    /**
+     * Checkers for Valid Date*/
+    check(
+        name = "when user enters valid date format dd/MM/yyyy",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10/04/2025"),
+        correctResult = true
+    )
 
+    check(
+        name = "when user enters valid leap year date",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "29/02/2024"),
+        correctResult = true
+    )
+
+    check(
+        name = "when user enters valid date with single-digit day and month",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "1/1/2023"),
+        correctResult = true
+    )
+
+    check(
+        name = "when user enters valid date end of year",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "31/12/2023"),
+        correctResult = true
+    )
+
+    check(
+        name = "when user enters valid date with extra leading zeros",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "09/08/2022"),
+        correctResult = true
+    )
+
+    /**
+     * Checkers for InValid Date*/
+    check(
+        name = "when user enters invalid date format using dashes",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "2025-04-10"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters day out of valid range",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "32/01/2024"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters month out of valid range",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "15/13/2024"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters year that is too small",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "15/05/0001"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters letters instead of numbers in date",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "April/10/2025"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters empty input for date",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, ""),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters date in wrong format yyyy-MM-dd",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "2025-04-10"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters invalid date with slashes reversed",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "04\\10\\2025"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters alphabet in date",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "aa/bb/cccc"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters empty string for date",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, ""),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters date with missing parts",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10/04"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters invalid day in date",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "32/01/2023"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters invalid month in date",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10/13/2023"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters invalid leap day in non-leap year",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "29/02/2023"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters special characters in date",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "@1/0*/202#"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters only spaces in date",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "   "),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters date with dash instead of slash",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10-04-2025"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters letters instead of numbers",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "dd/MM/yyyy"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters date with month as word",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10/April/2025"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters date with extra slashes",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10//04//2025"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters date with missing year",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10/04/"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters date with negative values",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "-10/-04/2025"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters date with zeros only",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "00/00/0000"),
+        correctResult = false
+    )
+
+    check(
+        name = "when user enters future date beyond 2100",
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10/04/2500"),
+        correctResult = false
+    )
+
+    // endregion
 }
 
 /**

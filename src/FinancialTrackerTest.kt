@@ -15,11 +15,11 @@ fun testUpdateTransaction() {
     val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
 
     fun isValidTransactionId(id: String): Boolean {
-        return true
+        return false
     }
 
     fun isValidUpdateTypeInput(input: String): Boolean {
-        return true
+        return false
     }
 
     // Valid (ID)

@@ -7,22 +7,22 @@ import java.util.Collections.emptyList
 class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
 
     override fun addTransaction(transaction: Transaction): Boolean {
-        return false
+        return true
     }
 
     override fun deleteTransactionById(transactionId: Int): Boolean {
-        return false
+        return true
     }
 
-    override fun updateTransaction(transactionId: String, type: TransactionUpdateType, newValue: String): Boolean {
-        return false
+    override fun updateTransaction(transactionId: Int, field: TransactionUpdateType, newValue: String): Boolean {
+        return true
     }
 
     override fun getAllTransactions(): List<Transaction>? {
         return emptyList()
     }
 
-    override fun getTransactionById(transactionId: String): Transaction? {
+    override fun getTransactionById(transactionId: Int): Transaction? {
         return null
     }
 

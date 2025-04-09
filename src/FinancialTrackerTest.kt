@@ -1,8 +1,8 @@
 package src
 
 import src.model.TransactionCheckInput
-import src.storage.IFinancialTrackerStorage
-import src.storage.MemoryFinancialTrackerStorage
+import storage.IFinancialTrackerStorage
+import storage.MemoryFinancialTrackerStorage
 import java.io.IO.println
 
 

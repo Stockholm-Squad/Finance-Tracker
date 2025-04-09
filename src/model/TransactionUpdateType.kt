@@ -5,5 +5,4 @@ enum class TransactionUpdateType(){
     CATEGORY,
     AMOUNT,
     EXIT;
-
 }

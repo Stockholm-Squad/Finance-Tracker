@@ -98,7 +98,6 @@ fun testUpdateTransaction() {
         correctResult = true
     )
 
-
     //invalid cases
 
     check(

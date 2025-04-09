@@ -67,6 +67,11 @@ fun testGetTransactionMonthlyReport() {
         expectedResult = true
     )
     check(
+        name = "When have floating or double number like 1.0 it should return null",
+        result = financialTracker.getTransactionByMonth("1.0") == null,
+        expectedResult = true
+    )
+    check(
         name = "When have leading 0 with number two digit 011 it should return null",
         result = financialTracker.getTransactionByMonth("011") == null,
         expectedResult = true
@@ -81,4 +86,21 @@ fun testGetTransactionMonthlyReport() {
         result = financialTracker.getTransactionByMonth("1") == null,
         expectedResult = true
     )
+    check(
+        name = "When input is number with characters like 1a it should return null",
+        result = financialTracker.getTransactionByMonth("1a") == null,
+        expectedResult = true
+    )
+    check(
+        name = "When input is number with special char like 1@ it should return null",
+        result = financialTracker.getTransactionByMonth("1@") == null,
+        expectedResult = true
+    )
+    check(
+        name = "When input is Arabic digit like ١ it should return null",
+        result = financialTracker.getTransactionByMonth("١") == null,
+        expectedResult = true
+    )
+
+
 }

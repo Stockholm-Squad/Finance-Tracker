@@ -2,7 +2,7 @@ package storage
 
 import model.Transaction
 
-interface IFinancialTrackerStorage {
+interface IFinancialTrackerRepository {
     fun addTransaction(transaction: Transaction): Boolean
     fun deleteTransactionById(transactionId: Int): Boolean
     fun updateTransaction(transaction: Transaction): Boolean

@@ -20,8 +20,6 @@ fun check(name: String, result: Boolean, expectedResult: Boolean) {
 }
 
 fun testCaseForDeleteTransaction() {
-    val financialTracker = FinancialTracker(MemoryFinancialTrackerStorage())
-    val storage= financialTracker.iFinancialTrackerStorage
 
     fun deleteTransactionById(id: String): Boolean{
         return false

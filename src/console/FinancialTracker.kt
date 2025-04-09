@@ -2,6 +2,6 @@ package console
 
 import storage.IFinancialTrackerStorage
 
-class FinancialTracker(val iFinancialTrackerStorage: IFinancialTrackerStorage) {
+class FinancialTracker(val financialTrackerStorage: IFinancialTrackerStorage) {
 
 }

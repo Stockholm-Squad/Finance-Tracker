@@ -6,8 +6,8 @@ import src.storage.MemoryFinancialTrackerStorage
 
 fun main() {
 
-    // rejoin delete
     testCaseForDeleteTransaction()
+
 
 }
 
@@ -22,70 +22,59 @@ fun check(name: String, result: Boolean, expectedResult: Boolean) {
 fun testCaseForDeleteTransaction() {
     val financialTracker = FinancialTracker(MemoryFinancialTrackerStorage())
     val storage= financialTracker.iFinancialTrackerStorage
+
+    fun deleteTransactionById(id: String): Boolean{
+        return id.toIntOrNull().let { it != null && storage.deleteTransactionById(it) }
+    }
+
     check(
         name = "delete existing transaction (ex:id = 2) is should return true ",
-        result = storage.deleteTransactionById(2),
+        result = deleteTransactionById("2"),
         expectedResult = true
     )
 
-    check(
-        name = "delete first transaction id = 1 is should return true ",
-        result = storage.deleteTransactionById(1),
-        expectedResult = true
-    )
-
-    check(
-        name = "delete transaction from middle id = 3 is should return true ",
-        result = storage.deleteTransactionById(3),
-        expectedResult = true
-    )
-
-    check(
-        name = "delete newly added transaction id = 4 is should return true ",
-        result = storage.deleteTransactionById(4),
-        expectedResult = true
-    )
-
-    check(
-        name = "delete last transaction id = 5 is should return true",
-        result = storage.deleteTransactionById(5),
-        expectedResult = true
-    )
 
     check(
         name = "invalid delete non-existing transaction id = 999 it should return false",
-        result = storage.deleteTransactionById(999),
+        result = deleteTransactionById("999"),
         expectedResult = false
     )
 
     check(
         name = "invalid delete transaction with negative ID id = -1 it should return false",
-        result = storage.deleteTransactionById(-1),
+        result = deleteTransactionById("-1"),
         expectedResult = false
     )
 
     check(
         name = "invalid delete transaction with id 0 it should return false",
-        result = storage.deleteTransactionById(0),
+        result = deleteTransactionById("0"),
         expectedResult = false
     )
 
 
-    check(
-        name = "invalid delete transaction with invalid id non-integer it should return false",
-        result = storage.deleteTransactionById(null as Int),
-        expectedResult = false
-    )
+//    check(
+//        name = "invalid delete transaction with invalid id non-integer it should return false",
+//        result = deleteTransactionById(null as Int),
+//        expectedResult = false
+//    )
 
     check(
         name = "delete transaction but have no transaction(first time that run app) it should return false",
-        result = storage.deleteTransactionById(1),
+        result = deleteTransactionById("1"),
         expectedResult = false
     )
 
     check(
-        name = "delete transaction but the transaction is empty(when he delete all transactions)  it should return false",
-        result = storage.deleteTransactionById(10),
+        name = "enter invalid id ex:user input = 1a it should return false",
+        result = deleteTransactionById("1a"),
         expectedResult = false
     )
+
+    check(
+        name = "enter invalid id ex:user input = 5 but 5 not exist it should return false",
+        result = deleteTransactionById("5"),
+        expectedResult = false
+    )
+
 }

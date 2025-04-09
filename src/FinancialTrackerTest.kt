@@ -81,4 +81,34 @@ fun testGetTransactionMonthlyReport() {
         result = financialTracker.getTransactionByMonth("1") == null,
         expectedResult = true
     )
+
+    /** Valid test cases */
+    check(
+        name = "When we have number like 1 and exists in memory {1, 6, 8} it should return transaction list not empty",
+        result = financialTracker.getTransactionByMonth("1")?.isNotEmpty() == true,
+        expectedResult = true
+    )
+    check(
+        name = "When we have number like 1 and exists in memory 3 times {1, 1, 1, 6, 8} it should return transaction list of 3 length",
+        result = financialTracker.getTransactionByMonth("1")?.size == 3,
+        expectedResult = true
+    )
+    check(
+        name = "When we have number like 03 and exists in memory {1, 3, 6, 8} it should return transaction list not empty",
+        result = financialTracker.getTransactionByMonth("03")?.isNotEmpty() == true,
+        expectedResult = true
+    )
+
+    check(
+        name = "When input contains spaces left or right like (  2  ) and exists in memory {2, 3, 6, 8} it should return transaction list not empty",
+        result = financialTracker.getTransactionByMonth("2")?.isNotEmpty() == true,
+        expectedResult = true
+    )
+
+    check(
+        name = "When we have number like ١ and exists in memory {1, 6, 8} it should return transaction list not empty",
+        result = financialTracker.getTransactionByMonth("1")?.isNotEmpty() == true,
+        expectedResult = true
+    )
+
 }

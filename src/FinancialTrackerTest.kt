@@ -22,7 +22,9 @@ fun testUpdateTransaction() {
         return true
     }
 
-    // Valid (ID)
+    // region Update
+    /**
+     * Checkers for Valid (ID) */
     check(
         name = "When id valid should return true",
         result = isValidTransactionId("1"),
@@ -35,7 +37,8 @@ fun testUpdateTransaction() {
         correctResult = true
     )
 
-    // InValid (ID)
+    /**
+     * Checkers for InValid (ID) */
     check(
         name = "When id has char should return false",
         result = isValidTransactionId("a"),
@@ -78,7 +81,8 @@ fun testUpdateTransaction() {
         correctResult = false
     )
 
-    // Valid Check Input
+    /**
+     * Checkers for Valid Check Input */
     check(
         name = "when update type input is valid should return true",
         result = isValidCheckInput("1"),
@@ -91,7 +95,8 @@ fun testUpdateTransaction() {
         correctResult = true
     )
 
-    // InValid Check Input
+    /**
+     * Checkers for InValid Check Input */
     check(
         name = "when update type out of range should return false",
         result = isValidCheckInput("7"),
@@ -122,8 +127,8 @@ fun testUpdateTransaction() {
         correctResult = false
     )
 
-
-    // Valid Transaction Category
+    /**
+     * Checkers for Valid Transaction Category */
     check(
         name = "When category is valid should return true",
         result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.CATEGORY, "Food"),
@@ -154,7 +159,8 @@ fun testUpdateTransaction() {
         correctResult = true
     )
 
-    // InValid Transaction Category
+    /**
+     * Checkers for InValid Transaction Category */
     check(
         name = "When category is empty should return false",
         result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.CATEGORY, ""),
@@ -162,7 +168,8 @@ fun testUpdateTransaction() {
     )
 
 
-    // Valid Transaction Type
+    /**
+     * Checkers for Valid Transaction Type */
     check(
         name = "When type is valid should return true",
         result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.TYPE, "1"),
@@ -175,7 +182,8 @@ fun testUpdateTransaction() {
         correctResult = true
     )
 
-    // Invalid Transaction Type
+    /**
+     * Checkers for Invalid Transaction Type */
     check(
         name = "When type has special char should return false",
         result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.TYPE, "@"),
@@ -198,7 +206,8 @@ fun testUpdateTransaction() {
         correctResult = false
     )
 
-    // Valid Transaction Amount
+    /**
+     * Checkers for Valid Transaction Amount */
     check(
         name = "when enter valid amount (Double value) should return true",
         result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, "5000.0"),
@@ -217,7 +226,8 @@ fun testUpdateTransaction() {
         correctResult = true
     )
 
-    // InValid Transaction Amount
+    /**
+     * Checkers for InValid Transaction Amount */
     check(
         name = "when enter negative number should return false",
         result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, "-5569"),
@@ -259,6 +269,7 @@ fun testUpdateTransaction() {
         result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, "4,5 00"),
         correctResult = false
     )
+    // endregion
 
 }
 

@@ -2,7 +2,7 @@ package src
 
 
 fun main() {
-    print("hello")
+    // Update Transaction Testcases
 }
 
 fun check(name: String, result: Boolean, expectedResult: Boolean) {

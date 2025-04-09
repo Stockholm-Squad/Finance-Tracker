@@ -1,6 +1,6 @@
 package src
 
-import src.model.TransactionUpdateType
+import src.model.TransactionCheckInput
 import src.storage.IFinancialTrackerStorage
 import src.storage.MemoryFinancialTrackerStorage
 import java.io.IO.println
@@ -131,31 +131,31 @@ fun testUpdateTransaction() {
      * Checkers for Valid Transaction Category */
     check(
         name = "When category is valid should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.CATEGORY, "Food"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.CATEGORY, "Food"),
         correctResult = true
     )
 
     check(
         name = "When category start & end with space should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.CATEGORY, " Food "),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.CATEGORY, " Food "),
         correctResult = true
     )
 
     check(
         name = "When category has space at middle should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.CATEGORY, "Food Expenses"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.CATEGORY, "Food Expenses"),
         correctResult = true
     )
 
     check(
         name = "When category has special character should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.CATEGORY, "Fo@od"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.CATEGORY, "Fo@od"),
         correctResult = true
     )
 
     check(
         name = "When category has number should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.CATEGORY, "F235ood"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.CATEGORY, "F235ood"),
         correctResult = true
     )
 
@@ -163,7 +163,7 @@ fun testUpdateTransaction() {
      * Checkers for InValid Transaction Category */
     check(
         name = "When category is empty should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.CATEGORY, ""),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.CATEGORY, ""),
         correctResult = false
     )
 
@@ -172,13 +172,13 @@ fun testUpdateTransaction() {
      * Checkers for Valid Transaction Type */
     check(
         name = "When type is valid should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.TYPE, "1"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, "1"),
         correctResult = true
     )
 
     check(
         name = "When type start & end with space should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.TYPE, " 1 "),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, " 1 "),
         correctResult = true
     )
 
@@ -186,23 +186,23 @@ fun testUpdateTransaction() {
      * Checkers for Invalid Transaction Type */
     check(
         name = "When type has special char should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.TYPE, "@"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, "@"),
         correctResult = false
     )
     check(
         name = "When type is empty should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.TYPE, ""),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, ""),
         correctResult = false
     )
     check(
         name = "When type char should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.TYPE, "a"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, "a"),
         correctResult = false
     )
 
     check(
         name = "When type out of range should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.TYPE, "3"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, "3"),
         correctResult = false
     )
 
@@ -210,19 +210,19 @@ fun testUpdateTransaction() {
      * Checkers for Valid Transaction Amount */
     check(
         name = "when enter valid amount (Double value) should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, "5000.0"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "5000.0"),
         correctResult = true
     )
 
     check(
         name = "when enter valid amount (Int value) should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, "5000"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "5000"),
         correctResult = true
     )
 
     check(
         name = "when enter input start  & end with space should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, " 5000"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, " 5000"),
         correctResult = true
     )
 
@@ -230,45 +230,46 @@ fun testUpdateTransaction() {
      * Checkers for InValid Transaction Amount */
     check(
         name = "when enter negative number should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, "-5569"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "-5569"),
         correctResult = false
     )
 
     check(
         name = "when enter character with number should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, "12aa"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "12aa"),
         correctResult = false
     )
 
     check(
         name = "when enter character should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, "aa"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "aa"),
         correctResult = false
     )
 
     check(
         name = "when enter special character with number should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, "12#$2"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "12#$2"),
         correctResult = false
     )
 
     check(
         name = "when enter valid amount (number with comma instead of dots) should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, "5,000,000"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "5,000,000"),
         correctResult = false
     )
 
     check(
         name = "when enter empty input should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, ""),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, ""),
         correctResult = false
     )
 
     check(
         name = "when input has space at middle should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionUpdateType.AMOUNT, "4,5 00"),
+        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "4,5 00"),
         correctResult = false
     )
+
     // endregion
 
 }

@@ -1,8 +1,9 @@
 package src.model
 
-enum class TransactionUpdateType(){
+enum class TransactionCheckInput(){
     TYPE,
     CATEGORY,
     AMOUNT,
+    DATE,
     EXIT;
 }

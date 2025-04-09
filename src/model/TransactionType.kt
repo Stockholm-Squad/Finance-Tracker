@@ -1,6 +1,6 @@
 package src.model
 
-enum class TransactionCategory {
+enum class TransactionType {
     INCOME,
     EXPANSES;
 }

@@ -1,0 +1,68 @@
+name: Finance Tracker Tests
+
+on:
+  pull_request:
+    branches: [ develop ]
+    paths:
+      - 'src/console/FinancialTracker.kt'
+      - 'src/FinancialTrackerTest.kt'
+
+jobs:
+  test:
+    name: Run Finance Tracker Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Kotlin
+        uses: fwilhe2/setup-kotlin@v1
+
+      - name: Run tests
+        run: |
+          # Single source of truth for file paths
+          MAIN_FILE="src/console/FinancialTracker.kt"
+          TEST_FILE="src/FinancialTrackerTest.kt"
+          
+          # Compile using the defined paths
+          kotlinc $MAIN_FILE $TEST_FILE -include-runtime -d finance_tracker.jar
+          
+          # Run and process output
+          echo "TEST_RESULTS<<EOF" >> $GITHUB_ENV
+          java -jar finance_tracker.jar | awk -v test_file="$TEST_FILE" '{
+            if ($0 ~ /^Success/) {
+              printf "::notice file=%s,title=Passed::%s\n", test_file, $0
+            } else if ($0 ~ /^Failed/) {
+              printf "::error file=%s,title=Failed::%s\n", test_file, $0
+            }
+            print $0
+          }' >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Create test summary
+        run: |
+          echo "# Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "| Status | Test Name |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-----------|" >> $GITHUB_STEP_SUMMARY
+          
+          echo "${{ env.TEST_RESULTS }}" | grep -E '^(Success|Failed)' | awk '{
+            status = ($1 == "Success") ? "✅ PASS" : "❌ FAIL";
+            test_name = substr($0, index($0,$2));
+            printf "| %s | %s |\n", status, test_name
+          }' >> $GITHUB_STEP_SUMMARY
+          
+          passed_count=$(echo "${{ env.TEST_RESULTS }}" | grep -c '^Success')
+          failed_count=$(echo "${{ env.TEST_RESULTS }}" | grep -c '^Failed')
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Summary:**" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ $passed_count passed" >> $GITHUB_STEP_SUMMARY
+          echo "- ❌ $failed_count failed" >> $GITHUB_STEP_SUMMARY
+          echo "- 📊 $((passed_count + failed_count)) total tests" >> $GITHUB_STEP_SUMMARY

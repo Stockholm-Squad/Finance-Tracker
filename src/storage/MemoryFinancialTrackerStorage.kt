@@ -1,32 +1,30 @@
-package src.storage
+package storage
 
-import src.model.Transaction
-import src.model.TransactionCheckInput
-import java.util.Collections.emptyList
+import model.Transaction
+import storage.IFinancialTrackerStorage
 
 class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
-
     override fun addTransaction(transaction: Transaction): Boolean {
-        return true
+        TODO("Not yet implemented")
     }
 
     override fun deleteTransactionById(transactionId: Int): Boolean {
-        return true
+        TODO("Not yet implemented")
     }
 
-    override fun updateTransaction(transactionId: Int, field: TransactionCheckInput, newValue: String): Boolean {
-        return true
+    override fun updateTransaction(transaction: Transaction): Boolean {
+        TODO("Not yet implemented")
     }
 
     override fun getAllTransactions(): List<Transaction>? {
-        return emptyList()
+        TODO("Not yet implemented")
     }
 
     override fun getTransactionById(transactionId: Int): Transaction? {
-        return null
+        TODO("Not yet implemented")
     }
 
     override fun getTransactionsByMonth(month: Int): List<Transaction>? {
-        return emptyList()
+        TODO("Not yet implemented")
     }
 }

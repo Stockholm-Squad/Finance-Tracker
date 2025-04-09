@@ -7,34 +7,47 @@ import src.storage.MemoryFinancialTrackerStorage
 fun main() {
 
     // rejoin delete
+    testCaseForDeleteTransaction()
+
+}
+
+fun check(name: String, result: Boolean, expectedResult: Boolean) {
+    if (result == expectedResult) {
+        println("Success $name")
+    } else {
+        println("Failed $name")
+    }
+}
+
+fun testCaseForDeleteTransaction() {
     val financialTracker = FinancialTracker(MemoryFinancialTrackerStorage())
     val storage= financialTracker.iFinancialTrackerStorage
     check(
-        name = "delete existing transaction id = 2",
+        name = "delete existing transaction (ex:id = 2) is should return true ",
         result = storage.deleteTransactionById(2),
         expectedResult = true
     )
 
     check(
-        name = "delete first transaction id = 1",
+        name = "delete first transaction id = 1 is should return true ",
         result = storage.deleteTransactionById(1),
         expectedResult = true
     )
 
     check(
-        name = "delete transaction from middle id = 3",
+        name = "delete transaction from middle id = 3 is should return true ",
         result = storage.deleteTransactionById(3),
         expectedResult = true
     )
 
     check(
-        name = "delete newly added transaction id = 4",
+        name = "delete newly added transaction id = 4 is should return true ",
         result = storage.deleteTransactionById(4),
         expectedResult = true
     )
 
     check(
-        name = "delete last transaction id = 5",
+        name = "delete last transaction id = 5 is should return true",
         result = storage.deleteTransactionById(5),
         expectedResult = true
     )
@@ -75,13 +88,4 @@ fun main() {
         result = storage.deleteTransactionById(10),
         expectedResult = false
     )
-
-}
-
-fun check(name: String, result: Boolean, expectedResult: Boolean) {
-    if (result == expectedResult) {
-        println("Success $name")
-    } else {
-        println("Failed $name")
-    }
 }

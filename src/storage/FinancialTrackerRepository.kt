@@ -2,9 +2,9 @@ package storage
 
 import model.Transaction
 
-class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
-    val allTransaction: MutableList<Transaction> = mutableListOf()
-
+class FinancialTrackerRepository(
+    val financialTrackerStorage: IFinancialTrackerStorage
+) : IFinancialTrackerRepository {
     override fun addTransaction(transaction: Transaction): Boolean {
         TODO("Not yet implemented")
     }
@@ -26,6 +26,6 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     }
 
     override fun getTransactionsByMonth(month: Int): List<Transaction>? {
-        return null
+        TODO("Not yet implemented")
     }
 }

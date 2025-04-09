@@ -12,34 +12,51 @@ fun main() {
     // start region for view transaction
     // get transaction by id
 
-    val memoryFinancialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
-    val financialTracker = FinancialTracker(memoryFinancialTrackerStorage)
+
     check(
         name = "when user send valid id, return true",
-        result = financialTracker.getTransactionById(2) != null,
+        result = getTransactionById("2") != null,
         expectedResult = true
     )
     check(
         name = "when user send out of range id, return false",
-        result = financialTracker.getTransactionById(100) != null,
+        result = getTransactionById("100") != null,
         expectedResult = false
     )
 
     check(
         name = "when user send out of range and negative id, return false",
-        result = financialTracker.getTransactionById(-1) != null,
+        result = getTransactionById("-1") != null,
         expectedResult = false
     )
     check(
         name = "when user send zero, return false",
-        result = financialTracker.getTransactionById(0) != null,
+        result = getTransactionById("0") != null,
+        expectedResult = false
+    )
+    check(
+        name = "when user send enter wrong input, return false",
+        result = getTransactionById("a") != null,
+        expectedResult = false
+    )
+
+    check(
+        name = "when user send enter 0 before choice, return false",
+        result = getTransactionById("01") != null,
+        expectedResult = false
+    )
+    check(
+        name = "when user send enter empty input, return false",
+        result = getTransactionById("") != null,
         expectedResult = false
     )
 
 
+
+
     // get all transaction
 
-    val listSize = financialTracker.getAllTransactions()?.size
+    val listSize = getAllTransaction()?.size
     check(
         name = "when transaction list has data, return true",
         result = listSize != null && listSize != 0,
@@ -50,11 +67,23 @@ fun main() {
     )
     check(
         name = "when transaction list is empty, return true",
-        result = memoryFinancialTrackerStorage.getAllTransactions() == emptyList<Transaction>(),
+        result = getAllTransaction() == emptyList<Transaction>(),
         expectedResult = true
     )
 
     // end region for view transaction
+}
+
+
+fun getTransactionById(id: String): Transaction? {
+    val memoryFinancialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
+    val financialTracker = FinancialTracker(memoryFinancialTrackerStorage)
+
+    return null
+}
+
+fun getAllTransaction(): List<Transaction>? {
+    return null
 }
 
 

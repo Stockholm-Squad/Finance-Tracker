@@ -1,9 +1,3 @@
-package src
-
-import src.console.FinancialTracker
-import src.storage.MemoryFinancialTrackerStorage
-
-
 fun main() {
 
     testCaseForDeleteTransaction()

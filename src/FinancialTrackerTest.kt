@@ -22,6 +22,10 @@ fun testUpdateTransaction() {
         return true
     }
 
+    fun updateTransaction(transactionId: Int , transactionCheckInput: TransactionCheckInput , newValue: String): Boolean {
+        return false
+    }
+
     // region Update
     /**
      * Checkers for Valid (ID) */
@@ -131,31 +135,31 @@ fun testUpdateTransaction() {
      * Checkers for Valid Transaction Category */
     check(
         name = "When category is valid should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.CATEGORY, "Food"),
+        result = updateTransaction(1, TransactionCheckInput.CATEGORY, "Food"),
         correctResult = true
     )
 
     check(
         name = "When category start & end with space should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.CATEGORY, " Food "),
+        result = updateTransaction(1, TransactionCheckInput.CATEGORY, " Food "),
         correctResult = true
     )
 
     check(
         name = "When category has space at middle should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.CATEGORY, "Food Expenses"),
+        result = updateTransaction(1, TransactionCheckInput.CATEGORY, "Food Expenses"),
         correctResult = true
     )
 
     check(
         name = "When category has special character should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.CATEGORY, "Fo@od"),
+        result = updateTransaction(1, TransactionCheckInput.CATEGORY, "Fo@od"),
         correctResult = true
     )
 
     check(
         name = "When category has number should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.CATEGORY, "F235ood"),
+        result = updateTransaction(1, TransactionCheckInput.CATEGORY, "F235ood"),
         correctResult = true
     )
 
@@ -163,7 +167,7 @@ fun testUpdateTransaction() {
      * Checkers for InValid Transaction Category */
     check(
         name = "When category is empty should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.CATEGORY, ""),
+        result = updateTransaction(1, TransactionCheckInput.CATEGORY, ""),
         correctResult = false
     )
 
@@ -172,13 +176,13 @@ fun testUpdateTransaction() {
      * Checkers for Valid Transaction Type */
     check(
         name = "When type is valid should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, "1"),
+        result = updateTransaction(1, TransactionCheckInput.TYPE, "1"),
         correctResult = true
     )
 
     check(
         name = "When type start & end with space should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, " 1 "),
+        result = updateTransaction(1, TransactionCheckInput.TYPE, " 1 "),
         correctResult = true
     )
 
@@ -186,25 +190,25 @@ fun testUpdateTransaction() {
      * Checkers for Invalid Transaction Type */
     check(
         name = "When type has special char should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, "@"),
+        result = updateTransaction(1, TransactionCheckInput.TYPE, "@"),
         correctResult = false
     )
 
     check(
         name = "When type is empty should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, ""),
+        result = updateTransaction(1, TransactionCheckInput.TYPE, ""),
         correctResult = false
     )
 
     check(
         name = "When type char should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, "a"),
+        result = updateTransaction(1, TransactionCheckInput.TYPE, "a"),
         correctResult = false
     )
 
     check(
         name = "When type out of range should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.TYPE, "3"),
+        result = updateTransaction(1, TransactionCheckInput.TYPE, "3"),
         correctResult = false
     )
 
@@ -212,19 +216,19 @@ fun testUpdateTransaction() {
      * Checkers for Valid Transaction Amount */
     check(
         name = "when enter valid amount (Double value) should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "5000.0"),
+        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "5000.0"),
         correctResult = true
     )
 
     check(
         name = "when enter valid amount (Int value) should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "5000"),
+        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "5000"),
         correctResult = true
     )
 
     check(
         name = "when enter input start  & end with space should return true",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, " 5000"),
+        result = updateTransaction(1, TransactionCheckInput.AMOUNT, " 5000"),
         correctResult = true
     )
 
@@ -232,43 +236,43 @@ fun testUpdateTransaction() {
      * Checkers for InValid Transaction Amount */
     check(
         name = "when enter negative number should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "-5569"),
+        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "-5569"),
         correctResult = false
     )
 
     check(
         name = "when enter character with number should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "12aa"),
+        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "12aa"),
         correctResult = false
     )
 
     check(
         name = "when enter character should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "aa"),
+        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "aa"),
         correctResult = false
     )
 
     check(
         name = "when enter special character with number should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "12#$2"),
+        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "12#$2"),
         correctResult = false
     )
 
     check(
         name = "when enter valid amount (number with comma instead of dots) should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "5,000,000"),
+        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "5,000,000"),
         correctResult = false
     )
 
     check(
         name = "when enter empty input should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, ""),
+        result = updateTransaction(1, TransactionCheckInput.AMOUNT, ""),
         correctResult = false
     )
 
     check(
         name = "when input has space at middle should return false",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.AMOUNT, "4,5 00"),
+        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "4,5 00"),
         correctResult = false
     )
 
@@ -276,31 +280,31 @@ fun testUpdateTransaction() {
      * Checkers for Valid Date*/
     check(
         name = "when user enters valid date format dd/MM/yyyy",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10/04/2025"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "10/04/2025"),
         correctResult = true
     )
 
     check(
         name = "when user enters valid leap year date",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "29/02/2024"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "29/02/2024"),
         correctResult = true
     )
 
     check(
         name = "when user enters valid date with single-digit day and month",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "1/1/2023"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "1/1/2023"),
         correctResult = true
     )
 
     check(
         name = "when user enters valid date end of year",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "31/12/2023"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "31/12/2023"),
         correctResult = true
     )
 
     check(
         name = "when user enters valid date with extra leading zeros",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "09/08/2022"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "09/08/2022"),
         correctResult = true
     )
 
@@ -308,145 +312,145 @@ fun testUpdateTransaction() {
      * Checkers for InValid Date*/
     check(
         name = "when user enters invalid date format using dashes",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "2025-04-10"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "2025-04-10"),
         correctResult = false
     )
 
     check(
         name = "when user enters day out of valid range",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "32/01/2024"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "32/01/2024"),
         correctResult = false
     )
 
     check(
         name = "when user enters month out of valid range",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "15/13/2024"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "15/13/2024"),
         correctResult = false
     )
 
     check(
         name = "when user enters year that is too small",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "15/05/0001"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "15/05/0001"),
         correctResult = false
     )
 
     check(
         name = "when user enters letters instead of numbers in date",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "April/10/2025"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "April/10/2025"),
         correctResult = false
     )
 
     check(
         name = "when user enters empty input for date",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, ""),
+        result = updateTransaction(1, TransactionCheckInput.DATE, ""),
         correctResult = false
     )
 
     check(
         name = "when user enters date in wrong format yyyy-MM-dd",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "2025-04-10"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "2025-04-10"),
         correctResult = false
     )
 
     check(
         name = "when user enters invalid date with slashes reversed",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "04\\10\\2025"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "04\\10\\2025"),
         correctResult = false
     )
 
     check(
         name = "when user enters alphabet in date",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "aa/bb/cccc"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "aa/bb/cccc"),
         correctResult = false
     )
 
     check(
         name = "when user enters empty string for date",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, ""),
+        result = updateTransaction(1, TransactionCheckInput.DATE, ""),
         correctResult = false
     )
 
     check(
         name = "when user enters date with missing parts",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10/04"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "10/04"),
         correctResult = false
     )
 
     check(
         name = "when user enters invalid day in date",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "32/01/2023"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "32/01/2023"),
         correctResult = false
     )
 
     check(
         name = "when user enters invalid month in date",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10/13/2023"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "10/13/2023"),
         correctResult = false
     )
 
     check(
         name = "when user enters invalid leap day in non-leap year",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "29/02/2023"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "29/02/2023"),
         correctResult = false
     )
 
     check(
         name = "when user enters special characters in date",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "@1/0*/202#"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "@1/0*/202#"),
         correctResult = false
     )
 
     check(
         name = "when user enters only spaces in date",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "   "),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "   "),
         correctResult = false
     )
 
     check(
         name = "when user enters date with dash instead of slash",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10-04-2025"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "10-04-2025"),
         correctResult = false
     )
 
     check(
         name = "when user enters letters instead of numbers",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "dd/MM/yyyy"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "dd/MM/yyyy"),
         correctResult = false
     )
 
     check(
         name = "when user enters date with month as word",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10/April/2025"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "10/April/2025"),
         correctResult = false
     )
 
     check(
         name = "when user enters date with extra slashes",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10//04//2025"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "10//04//2025"),
         correctResult = false
     )
 
     check(
         name = "when user enters date with missing year",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10/04/"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "10/04/"),
         correctResult = false
     )
 
     check(
         name = "when user enters date with negative values",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "-10/-04/2025"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "-10/-04/2025"),
         correctResult = false
     )
 
     check(
         name = "when user enters date with zeros only",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "00/00/0000"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "00/00/0000"),
         correctResult = false
     )
 
     check(
         name = "when user enters future date beyond 2100",
-        result = financialTrackerStorage.updateTransaction(1, TransactionCheckInput.DATE, "10/04/2500"),
+        result = updateTransaction(1, TransactionCheckInput.DATE, "10/04/2500"),
         correctResult = false
     )
 

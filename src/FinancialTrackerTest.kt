@@ -19,6 +19,15 @@ fun testUpdateTransaction() {
         return financialTrackerStorage.getTransactionById(id) != null
     }
 
+    fun isValidUpdateTypeInput(input: String): Boolean{
+        val inputt : Int = input.toInt()
+        if (inputt in 1..4){
+            return true
+        } else {
+            return false
+        }
+    }
+
     // Valid (ID)
     check(
         name = "When user update existing transaction should return true",
@@ -68,6 +77,56 @@ fun testUpdateTransaction() {
         result = financialTrackerStorage.updateTransaction("1", TransactionUpdateType.CATEGORY, "Groceries"),
         correctResult = true
     )
+
+    //check update type
+    //valid case
+    check(
+        name = "when update type input is valid should return true",
+        result = isValidUpdateTypeInput("1"),
+        correctResult = true
+    )
+
+    check(
+        name = "when update type start with space should return true",
+        result = isValidUpdateTypeInput(" 1"),
+        correctResult = true
+    )
+
+    check(
+        name = "when update type end with space should return true",
+        result = isValidUpdateTypeInput("1 "),
+        correctResult = true
+    )
+
+
+    //invalid cases
+
+    check(
+        name = "when update type out of range should return false",
+        result = isValidUpdateTypeInput("7"),
+        correctResult = false
+    )
+
+    check(
+        name = "when update type is character should return false",
+        result = isValidUpdateTypeInput("a"),
+        correctResult = false
+    )
+
+    check(
+        name = "when update type is special character should return false",
+        result = isValidUpdateTypeInput("@"),
+        correctResult = false
+    )
+
+    check(
+        name = "when enter more than one digit should return false",
+        result = isValidUpdateTypeInput("123456"),
+        correctResult = false
+    )
+
+
+
 
 
 

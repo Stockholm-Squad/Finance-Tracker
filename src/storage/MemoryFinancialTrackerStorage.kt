@@ -1,6 +1,7 @@
-package src.storage
+package storage
 
-import src.model.Transaction
+import model.Transaction
+import storage.IFinancialTrackerStorage
 
 class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     override fun addTransaction(transaction: Transaction): Boolean {

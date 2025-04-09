@@ -1,9 +1,5 @@
 package src
 
-import src.model.Transaction
-import src.model.TransactionCategory
-import src.model.TransactionDate
-import src.model.TransactionMonth
 
 fun main() {
 // region add
@@ -170,7 +166,7 @@ fun main() {
         addTransaction(amount = "23", day = "23", month = "2", year = "     ", category = "1", type = "food"),
         false
     )
-    
+
     check(
         "when year contains characters return false",
         addTransaction(amount = "23", day = "23", month = "2", year = "a", category = "1", type = "food"),

@@ -3,8 +3,6 @@ package src
 import src.console.FinancialTracker
 import src.storage.IFinancialTrackerStorage
 import src.storage.MemoryFinancialTrackerStorage
-import src.test.TransactionMonthlyReportTestCase
-
 
 fun main() {
     println("hello")
@@ -22,9 +20,10 @@ fun check(name: String, result: Boolean, expectedResult: Boolean) {
 fun testGetTransactionMonthlyReport() {
     val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
     val financialTracker = FinancialTracker(financialTrackerStorage)
+    /** Invalid test cases */
     check(
-        name = TransactionMonthlyReportTestCase.TEST_CASE1.testCaseMessage,
-        result = financialTracker.getTransactionByMonth(TransactionMonthlyReportTestCase.TEST_CASE1.month) == null,
+        name = "When have negative number like -1 it should return false",
+        result = financialTracker.getTransactionByMonth("-1") == null,
         expectedResult = true
     )
 }

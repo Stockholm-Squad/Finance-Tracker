@@ -307,7 +307,7 @@ fun main() {
 
 fun getTransactionById(id: String): Transaction? {
     val memoryFinancialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
-    val financialTracker = FinancialTracker(memoryFinancialTrackerStorage)
+    val financialTrackerRepository = FinancialTrackerRepository(memoryFinancialTrackerStorage)
 
     return null
 }

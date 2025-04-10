@@ -26,6 +26,6 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     }
 
     override fun getTransactionsByMonth(month: Int): List<Transaction>? {
-        TODO("Not yet implemented")
+        return null
     }
 }

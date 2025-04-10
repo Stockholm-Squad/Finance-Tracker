@@ -10,14 +10,14 @@ class ViewTransactionActionHandler : ActionHandler {
     override fun handleAction(financialTrackerRepository: IFinancialTrackerStorage) {
         // for printing the view
         while (true) {
-            val transactionsCount = financialTrackerRepository.getAllTransactions()?.size ?:0
+            val transactionsCount = financialTrackerRepository.getAllTransactions()?.size ?: 0
             if (transactionsCount > 0) {
                 println("\nHere are all transactions :")
-            financialTrackerRepository.getAllTransactions()?.forEach(
-                {
-                    println("${it.id}. ${it.category} ${it.amount} EGP ${it.date.day}/${it.date.month}/${it.date.year}")
-                }
-            )
+                financialTrackerRepository.getAllTransactions()?.forEach(
+                    {
+                        println("${it.id}. ${it.category} ${it.amount} EGP ${it.date.day}/${it.date.month}/${it.date.year}")
+                    }
+                )
             }
 
             println("\nWhich transaction would you like to view ? ")
@@ -25,15 +25,11 @@ class ViewTransactionActionHandler : ActionHandler {
 
             //region validation
 
-              if (choice != null) {
-                 if ( viewTransactionActionValidator.validateIdNotString(choice) )
-                 if ( viewTransactionActionValidator.validateIdNotOutOfRange(choice.toInt(),transactionsCount)) {
-                    val transaction = financialTrackerRepository.getTransactionById(choice.toInt())
-                    println("\nTransaction details is:\nCategory / ${transaction?.category}\nAmount / ${transaction?.amount} EGP\nDate / 0${transaction?.date?.day}/${transaction?.date?.month}/${transaction?.date?.year}\nType / ${transaction?.type}\n")
-                    return
-                }
-              }
-            else println("Invalid Input, Please try again")
+            if (viewTransactionActionValidator.validateId(choice, transactionsCount)) {
+                val transaction = choice?.toInt()?.let { financialTrackerRepository.getTransactionById(it) }
+                println("\nTransaction details is:\nCategory / ${transaction?.category}\nAmount / ${transaction?.amount} EGP\nDate / 0${transaction?.date?.day}/${transaction?.date?.month}/${transaction?.date?.year}\nType / ${transaction?.type}\n")
+                return
+            }
 
             //end
 

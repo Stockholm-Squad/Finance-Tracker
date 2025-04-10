@@ -1,7 +1,7 @@
 package src.view_transaction.validation
 
-import src.model.Transaction
-
 interface IViewTransactionActionValidator {
 
+    fun validateIdNotString(id:String):Boolean
+    fun validateIdNotOutOfRange(id:Int,transactionsSize:Int):Boolean
 }

@@ -19,11 +19,14 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     }
 
     override fun getAllTransactions(): List<Transaction>? {
-        TODO("Not yet implemented")
+
+        return allTransaction
     }
 
     override fun getTransactionById(transactionId: Int): Transaction? {
-        TODO("Not yet implemented")
+
+
+        return allTransaction.find { it.id == transactionId}
     }
 
     override fun getTransactionsByMonth(month: Int): List<Transaction>? {

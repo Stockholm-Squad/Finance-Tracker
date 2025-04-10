@@ -1,10 +1,11 @@
 package src
 
-import java.io.IO.println
 import model.Transaction
 import src.console.FinancialTracker
+import src.model.TransactionCheckInput
 import storage.IFinancialTrackerStorage
 import storage.MemoryFinancialTrackerStorage
+import java.io.IO.println
 
 
 fun main() {
@@ -281,8 +282,6 @@ fun main() {
     )
 
 
-
-
     // get all transaction
 
     val listSize = getAllTransaction()?.size
@@ -338,7 +337,7 @@ fun addTransaction(amount: String, day: String, month: String, year: String, typ
 
 fun testCaseForDeleteTransaction() {
 
-    fun deleteTransactionById(id: String): Boolean{
+    fun deleteTransactionById(id: String): Boolean {
         return false
     }
 
@@ -400,7 +399,7 @@ fun testUpdateTransaction() {
         return true
     }
 
-    fun updateTransaction(transactionId: Int , transactionCheckInput: TransactionCheckInput , newValue: String): Boolean {
+    fun updateTransaction(transactionId: Int, transactionCheckInput: TransactionCheckInput, newValue: String): Boolean {
         return false
     }
 

@@ -1,6 +1,7 @@
-package storage
+package src.storage
 
-import model.Transaction
+import src.model.Transaction
+import src.storage.IFinancialTrackerStorage
 
 class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     val allTransaction: MutableList<Transaction> = mutableListOf()

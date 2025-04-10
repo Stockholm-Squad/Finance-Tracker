@@ -1,4 +1,4 @@
-package update.validation
+package src.update.validation
 
 interface IUpdateTransactionActionValidator {
 }

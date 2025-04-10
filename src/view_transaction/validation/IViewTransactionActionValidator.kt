@@ -1,4 +1,4 @@
-package view_transaction.validation
+package src.view_transaction.validation
 
 interface IViewTransactionActionValidator {
 }

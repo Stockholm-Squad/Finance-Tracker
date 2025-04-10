@@ -1,4 +1,4 @@
-package common.validator
+package src.common.validator
 
 class FinanceTransactionValidator {
 

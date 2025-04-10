@@ -1,4 +1,4 @@
-package report.validation
+package src.report.validation
 
 interface ITransactionReportActionValidator {
 }

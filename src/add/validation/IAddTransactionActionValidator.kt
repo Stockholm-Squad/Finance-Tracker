@@ -1,4 +1,4 @@
-package add.validation
+package src.add.validation
 
 interface IAddTransactionActionValidator {
 

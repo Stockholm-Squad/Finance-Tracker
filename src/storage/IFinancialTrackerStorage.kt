@@ -1,6 +1,6 @@
-package storage
+package src.storage
 
-import model.Transaction
+import src.model.Transaction
 
 interface IFinancialTrackerStorage {
     fun addTransaction(transaction: Transaction): Boolean

@@ -1,4 +1,4 @@
-package model
+package src.model
 
 enum class TransactionType {
     INCOME,

@@ -1,9 +1,9 @@
-package common.console.handler
+package src.common.console.handler
 
-import storage.IFinancialTrackerRepository
+import src.storage.IFinancialTrackerStorage
 
 interface ActionHandler {
     fun handleAction(
-        financialTrackerRepository: IFinancialTrackerRepository
+        financialTrackerRepository: IFinancialTrackerStorage
     )
 }

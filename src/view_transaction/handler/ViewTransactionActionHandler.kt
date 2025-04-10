@@ -1,10 +1,10 @@
-package view_transaction.handler
+package src.view_transaction.handler
 
-import common.console.handler.ActionHandler
-import storage.IFinancialTrackerRepository
+import src.common.console.handler.ActionHandler
+import src.storage.IFinancialTrackerStorage
 
 class ViewTransactionActionHandler : ActionHandler {
-    override fun handleAction(financialTrackerRepository: IFinancialTrackerRepository) {
+    override fun handleAction(financialTrackerRepository: IFinancialTrackerStorage) {
         TODO("Not yet implemented")
     }
 

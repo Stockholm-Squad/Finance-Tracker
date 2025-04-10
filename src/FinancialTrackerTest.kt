@@ -1,17 +1,14 @@
 package src
 
-import model.Transaction
+import src.model.Transaction
 import src.model.TransactionCheckInput
-import storage.FinancialTrackerRepository
-import storage.IFinancialTrackerStorage
-import storage.MemoryFinancialTrackerStorage
+import src.storage.IFinancialTrackerStorage
+import src.storage.MemoryFinancialTrackerStorage
 
-import java.io.IO.println
 fun main() {
     testCaseForDeleteTransaction()
     testUpdateTransaction()
     testGetTransactionMonthlyReport()
-
 // region add
     /**
      * Checkers for amount parameter*/
@@ -307,7 +304,6 @@ fun main() {
 
 fun getTransactionById(id: String): Transaction? {
     val memoryFinancialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
-    val financialTrackerRepository = FinancialTrackerRepository(memoryFinancialTrackerStorage)
 
     return null
 }
@@ -390,8 +386,6 @@ fun testCaseForDeleteTransaction() {
 
 
 fun testUpdateTransaction() {
-    val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
-
     fun isValidTransactionId(id: String): Boolean {
         return true
     }
@@ -837,9 +831,6 @@ fun testUpdateTransaction() {
 
 
 fun testGetTransactionMonthlyReport() {
-    val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
-    val financialTracker = FinancialTrackerRepository(financialTrackerStorage)
-
     /** Invalid test cases */
 
     check(

@@ -1,4 +1,4 @@
-package model
+package src.model
 
 data class Transaction(
     val id: Int,

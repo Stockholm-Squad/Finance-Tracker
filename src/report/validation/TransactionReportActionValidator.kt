@@ -1,7 +1,16 @@
 package src.report.validation
 
-import src.report.validation.ITransactionReportActionValidator
 
 class TransactionReportActionValidator : ITransactionReportActionValidator {
-    //TODO add all validation related to add feature
+    override fun isMonthValid(month: String?): Boolean {
+
+        val trimMonth = month?.trim() ?: return false
+        if (trimMonth.isEmpty()) return false
+        if (trimMonth.first() == '0') return false
+        val isDigit = trimMonth.all { it.isDigit() }
+        if (!isDigit) return false
+        val monthAsDigit = trimMonth.toInt()
+        return !(monthAsDigit < 1 || monthAsDigit > 12)
+
+    }
 }

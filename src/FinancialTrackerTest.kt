@@ -12,6 +12,7 @@ fun main() {
     // start region for view transaction
     // get transaction by id
     AddTransactionTest().runTest()
+    UpdateTransactionTest().runTest()
 
 
     check(

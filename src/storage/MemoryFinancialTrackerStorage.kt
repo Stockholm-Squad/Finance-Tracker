@@ -1,7 +1,9 @@
 package src.storage
 
 import src.model.Transaction
+import src.model.TransactionDate
 import src.model.TransactionMonth
+import src.model.TransactionType
 
 class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     companion object {
@@ -28,13 +30,12 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
         }
     }
 
-    override fun getAllTransactions(): List<Transaction>? {
+    override fun getAllTransactions(): List<Transaction> {
 
         return allTransaction
     }
 
     override fun getTransactionById(transactionId: Int): Transaction? {
-
 
         return allTransaction.find { it.id == transactionId }
     }

@@ -3,6 +3,8 @@ package src
 import src.model.Transaction
 import src.storage.IFinancialTrackerStorage
 import src.storage.MemoryFinancialTrackerStorage
+import src.view_transaction.validation.IViewTransactionActionValidator
+import src.view_transaction.validation.ViewTransactionActionValidator
 
 fun main() {
     testCaseForDeleteTransaction()
@@ -286,14 +288,12 @@ fun main() {
     )
 
     // end region for view transaction
-
-    print("hello")
 }
 
-fun getTransactionById(id: String): Transaction? {
-    val memoryFinancialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
-
-    return null
+fun getTransactionById(id: String): Boolean? {
+//    val viewTransactionActionValidator:IViewTransactionActionValidator = ViewTransactionActionValidator()
+//    viewTransactionActionValidator.validateId(id)
+    return true
 }
 
 fun getAllTransaction(): List<Transaction>? {

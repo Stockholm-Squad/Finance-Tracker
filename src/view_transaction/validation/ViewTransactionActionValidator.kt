@@ -14,16 +14,14 @@ class ViewTransactionActionValidator : IViewTransactionActionValidator {
 
     override fun validateIdNotOutOfRange(id: Int, transactionsSize: Int): Boolean {
         return if (id in 1..transactionsSize) true
-        else {
-
+        else
             false
-        }
+
     }
 
     override fun validateId(id: String?): Boolean {
-        return if (id != null) {
-            return true
-        } else false
+        return if (id != null) return true
+        else false
     }
 
 }

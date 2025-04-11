@@ -8,58 +8,51 @@ import src.view_transaction.validation.ViewTransactionActionValidator
 class ViewTransactionActionHandler : ActionHandler {
     private val viewTransactionActionValidator: IViewTransactionActionValidator = ViewTransactionActionValidator()
     override fun handleAction(financialTrackerRepository: IFinancialTrackerStorage) {
-        // for printing the view
-        val transactionsCount = financialTrackerRepository.getAllTransactions()?.size ?: 0
-        if (transactionsCount != 0){
-            while (true) {
-                if (transactionsCount > 0) {
-                    println("\nHere are all transactions :")
-                    println("----------------------------------------------")
-                    financialTrackerRepository.getAllTransactions()?.forEach(
-                        {
-                            println("${it.id}. ${it.category} ${it.amount} EGP ${it.date.day}/${it.date.month}/${it.date.year}")
-                        }
-                    )
-                }
-
-                println("\nWhich transaction would you like to view ? ")
-
-                val choice = readlnOrNull()
-
-                //region validation
-
-                if (viewTransactionActionValidator.validateId(choice)) {
-                    if (viewTransactionActionValidator.validateIdNotString(choice!!)) {
-                        if (viewTransactionActionValidator.validateIdNotOutOfRange(
-                                choice.toInt(),
-                                transactionsSize = transactionsCount
-                            )
-                        ) {
-                            val transaction = choice.toInt().let { financialTrackerRepository.getTransactionById(it) }
-                            println("Transaction details is:")
-                            println("----------------------------------------------")
-                            println("Category / ${transaction?.category}\nAmount / ${transaction?.amount} EGP\nDate / 0${transaction?.date?.day}/${transaction?.date?.month}/${transaction?.date?.year}\nType / ${transaction?.type}\n")
-                            println("Would you like to view more transaction you made? y/n")
-                            val breakOrContinueChoice = readln()
-                            if (breakOrContinueChoice == "n")
-                                return
-                        } else {
-                            println("No transaction with that number 😒..Try Again")
-                        }
-                    } else {
-                        println("Only numbers are valid 😡..Try Again")
-
-                    }
-                } else {
-                    println("You didn't choose 😢..Try Again")
-                }
-
-
-            }
-        }else{
+        val transactions = financialTrackerRepository.getAllTransactions()
+        if (transactions.isNullOrEmpty()) {
             println("No transaction was found....add some transaction and come again\n")
+            return
         }
 
+        while (true) {
+            println("\nHere are all transactions:")
+            println("----------------------------------------------")
+            transactions.forEachIndexed { index, transaction ->
+                println("${index + 1}. ${transaction.category} ${transaction.amount} EGP ${transaction.date.day}/${transaction.date.month}/${transaction.date.year}")
+            }
+
+            println("\nWhich transaction would you like to view? (or 'q' to quit)")
+            val choice = readlnOrNull() ?: continue
+
+
+            when {
+                !viewTransactionActionValidator.validateId(choice) -> {
+                    println("You didn't choose 😢..Try Again")
+                    continue
+                }
+
+                !viewTransactionActionValidator.validateIdNotString(choice) -> {
+                    println("Only numbers are valid 😡..Try Again")
+                    continue
+                }
+
+                !viewTransactionActionValidator.validateIdNotOutOfRange(choice.toInt(), transactions.size) -> {
+                    println("No transaction with that number 😒..Try Again")
+                    continue
+                }
+            }
+
+
+            val transaction = financialTrackerRepository.getTransactionById(choice.toInt()) ?: continue
+            println("Transaction details is:")
+            println("----------------------------------------------")
+            println("Category / ${transaction.category}\nAmount / ${transaction.amount} EGP\nDate / 0${transaction.date.day}/${transaction.date.month}/${transaction.date?.year}\nType / ${transaction.type}\n")
+
+            println("\nWould you like to view more transactions? (y/n)")
+            val breakOrContinueChoice = readlnOrNull()
+            if (breakOrContinueChoice == "n")
+                return
+        }
     }
 
 }

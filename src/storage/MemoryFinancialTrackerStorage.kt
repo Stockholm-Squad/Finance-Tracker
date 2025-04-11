@@ -8,7 +8,35 @@ import src.storage.IFinancialTrackerStorage
 
 class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     val allTransaction: MutableList<Transaction> = mutableListOf()
-
+    init {
+        allTransaction.add(
+            Transaction(
+                id = 1,
+                amount = 1.2,
+                date = TransactionDate(day = 2, month = TransactionMonth.MAY, year = 2002),
+                type = TransactionType.INCOME,
+                category = "Food"
+            )
+        )
+        allTransaction.add(
+            Transaction(
+                id = 2,
+                amount = 1.2,
+                date = TransactionDate(day = 2, month = TransactionMonth.MAY, year = 2002),
+                type = TransactionType.INCOME,
+                category = "NBE"
+            )
+        )
+        allTransaction.add(
+            Transaction(
+                id = 3,
+                amount = 1.2,
+                date = TransactionDate(day = 2, month = TransactionMonth.MAY, year = 2002),
+                type = TransactionType.INCOME,
+                category = "NBE"
+            )
+        )
+    }
     override fun addTransaction(transaction: Transaction): Boolean {
         TODO("Not yet implemented")
     }

@@ -7,8 +7,8 @@ import src.view_transaction.validation.ViewTransactionActionValidator
 
 class ViewTransactionActionHandler : ActionHandler {
     private val viewTransactionActionValidator: IViewTransactionActionValidator = ViewTransactionActionValidator()
-    override fun handleAction(financialTrackerRepository: IFinancialTrackerStorage) {
-        val transactions = financialTrackerRepository.getAllTransactions()
+    override fun handleAction(financialTrackerStorage: IFinancialTrackerStorage) {
+        val transactions = financialTrackerStorage.getAllTransactions()
         if (transactions.isNullOrEmpty()) {
             println("No transaction was found....add some transaction and come again\n")
             return
@@ -43,7 +43,7 @@ class ViewTransactionActionHandler : ActionHandler {
             }
 
 
-            val transaction = financialTrackerRepository.getTransactionById(choice.toInt()) ?: continue
+            val transaction = financialTrackerStorage.getTransactionById(choice.toInt()) ?: continue
             println("Transaction details is:")
             println("----------------------------------------------")
             println("Category / ${transaction.category}\nAmount / ${transaction.amount} EGP\nDate / 0${transaction.date.day}/${transaction.date.month}/${transaction.date?.year}\nType / ${transaction.type}\n")

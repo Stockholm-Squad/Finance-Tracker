@@ -1,7 +1,7 @@
 package src.storage
 
 import src.model.Transaction
-import src.storage.IFinancialTrackerStorage
+import src.model.TransactionMonth
 
 class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     val allTransaction: MutableList<Transaction> = mutableListOf()
@@ -29,7 +29,12 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
         return allTransaction.find { it.id == transactionId}
     }
 
-    override fun getTransactionsByMonth(month: Int): List<Transaction>? {
-        return null
+    override fun getTransactionsByMonth(transactionMonth: TransactionMonth): List<Transaction>? {
+        val result: MutableList<Transaction>? = null
+        allTransaction.forEach{ transaction ->
+            if (transaction.date.month == transactionMonth)
+            result?.add(transaction)
+        }
+        return result
     }
 }

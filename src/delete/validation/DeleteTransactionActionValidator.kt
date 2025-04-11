@@ -17,12 +17,14 @@ class DeleteTransactionActionValidator : IDeleteTransactionActionHandler {
     override fun checkID(allTransaction: List<Transaction> , id : String?): Boolean {
         return id?.let { id ->
             id.toIntOrNull()?.let {
-                it >= 1 && allTransaction.any{ it.id == id.toInt() }
+                if (id.toInt() >= allTransaction.size) {return false}
+                val transactionId = allTransaction[id.toInt()].id
+                it >= 0 && allTransaction.any { it.id == transactionId }
             }
         } ?: false
     }
 
-    override fun deleteTransaction(financialTrackerStorage: IFinancialTrackerStorage, id: String?) : Boolean{
+    override fun deleteTransaction(financialTrackerStorage: IFinancialTrackerStorage, id: String?) : Boolean {
         return financialTrackerStorage.deleteTransactionById(id!!.toInt())
     }
 

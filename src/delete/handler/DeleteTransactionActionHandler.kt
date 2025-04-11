@@ -1,18 +1,18 @@
 package src.delete.handler
-
 import src.common.console.handler.ActionHandler
 import src.common.helper.display.IDisplayTransaction
-import src.delete.validation.DeleteTransactionActionValidator
 import src.delete.validation.IDeleteTransactionActionHandler
-import src.model.Transaction
 import src.storage.IFinancialTrackerStorage
 
 class DeleteTransactionActionHandler(private val validator : IDeleteTransactionActionHandler,private val helper: IDisplayTransaction) : ActionHandler {
     override fun handleAction(financialTrackerStorage: IFinancialTrackerStorage) {
         val allTransactions = financialTrackerStorage.getAllTransactions()
-        if (!helper.displayAllTransactions()) return
+        if (!helper.displayAllTransactions()){
+            println("No transactions to delete.")
+            return
+        }
 
-        println("Enter the id of the transaction to delete:")
+        println("Enter the transaction to delete:")
         while(true){
             val id = readlnOrNull()
             if(validator.checkID(allTransactions!!.toList() , id)){

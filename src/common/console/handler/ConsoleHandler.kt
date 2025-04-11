@@ -18,6 +18,7 @@ class ConsoleHandler {
     private val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
     private val helper = DisplayTransactions(financialTrackerStorage.getAllTransactions()!!)
     fun welcomeMessage() {
+        dummyData()
         while (true) {
             println("----------------------------------------------")
             println("----------------------------------------------")
@@ -43,6 +44,44 @@ class ConsoleHandler {
                 else -> println("Invalid Input, Please try again")
             }
         }
+    }
+    fun dummyData() {
+        (financialTrackerStorage as MemoryFinancialTrackerStorage).allTransaction.add(
+            Transaction(
+                id = 1,
+                amount = 3000.0,
+                date = TransactionDate(1, TransactionMonth.APRIL,2023),
+                category = "Food",
+                type = TransactionType.EXPANSES
+            )
+        )
+        (financialTrackerStorage as MemoryFinancialTrackerStorage).allTransaction.add(
+            Transaction(
+                id = 2,
+                amount = 2000.0,
+                date = TransactionDate(1, TransactionMonth.APRIL,2023),
+                category = "Food",
+                type = TransactionType.INCOME
+            )
+        )
+        (financialTrackerStorage as MemoryFinancialTrackerStorage).allTransaction.add(
+            Transaction(
+                id = 3,
+                amount = 4000.0,
+                date = TransactionDate(1, TransactionMonth.APRIL,2023),
+                category = "any",
+                type = TransactionType.EXPANSES
+            )
+        )
+        (financialTrackerStorage as MemoryFinancialTrackerStorage).allTransaction.add(
+            Transaction(
+                id = 4,
+                amount = 5000.0,
+                date = TransactionDate(1, TransactionMonth.APRIL,2023),
+                category = "test",
+                type = TransactionType.INCOME
+            )
+        )
     }
 }
 

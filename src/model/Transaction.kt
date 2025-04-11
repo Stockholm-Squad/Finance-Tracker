@@ -1,7 +1,7 @@
 package src.model
 
 data class Transaction(
-    val id: Int,
+    val id: String,
     val amount: Double,
     val date: TransactionDate,
     val category: String,

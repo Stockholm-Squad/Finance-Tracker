@@ -3,7 +3,7 @@ package src.delete.validation
 import src.model.Transaction
 import src.storage.IFinancialTrackerStorage
 
-class DeleteTransactionActionValidator : IDeleteTransactionActionHandler {
+class DeleteTransactionActionValidator : IDeleteTransactionActionValidator {
 
     override fun checkConfirmation(): Boolean {
         println("Are you sure you want to delete this transaction? (y/n)")
@@ -14,11 +14,11 @@ class DeleteTransactionActionValidator : IDeleteTransactionActionHandler {
         return false
     }
 
-    override fun checkID(allTransaction: List<Transaction> , id : String?): Boolean {
-        return id?.let { id ->
-            id.toIntOrNull()?.let {
-                if (id.toInt() >= allTransaction.size) {return false}
-                val transactionId = allTransaction[id.toInt()].id
+    override fun checkTransactionIndex(allTransaction: List<Transaction>, selectedIndex : String?): Boolean {
+        return selectedIndex?.let { index ->
+            index.toIntOrNull()?.let {
+                if (index.toInt() - 1 >= allTransaction.size) {return false}
+                val transactionId = allTransaction[index.toInt() - 1].id
                 it >= 0 && allTransaction.any { it.id == transactionId }
             }
         } ?: false

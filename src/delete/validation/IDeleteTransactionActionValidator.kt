@@ -3,8 +3,8 @@ package src.delete.validation
 import src.model.Transaction
 import src.storage.IFinancialTrackerStorage
 
-interface IDeleteTransactionActionHandler {
+interface IDeleteTransactionActionValidator {
     fun checkConfirmation():Boolean
-    fun checkID(allTransaction: List<Transaction>, id : String?):Boolean
+    fun checkTransactionIndex(allTransaction: List<Transaction>, selectedIndex : String?):Boolean
     fun deleteTransaction(financialTrackerStorage: IFinancialTrackerStorage, id : String?) : Boolean
 }

@@ -8,16 +8,19 @@ import src.model.TransactionDate
 import src.model.TransactionMonth
 import src.model.TransactionType
 import src.storage.IFinancialTrackerStorage
-class AddTransactionActionHandler : ActionHandler {
-    companion object {
-        val validator: IAddTransactionActionValidator = AddTransactionActionValidator()
-    }
+import java.util.Calendar
+import java.util.UUID
 
+class AddTransactionActionHandler : ActionHandler {
+
+    private val validator: IAddTransactionActionValidator = AddTransactionActionValidator()
+
+
+    // object
     override fun handleAction(financialTrackerStorage: IFinancialTrackerStorage) {
         println("------------------------------------Add Transaction---------------------------------")
-        val numberOFTransactions = financialTrackerStorage.getAllTransactions()?.size ?: 0
         val amount = handleAmount()
-        val id = numberOFTransactions.plus(1)
+        val id = UUID.randomUUID()
         val day = handleDay()
         val month = when (handleMonth()) {
             1 -> TransactionMonth.JANUARY
@@ -34,7 +37,8 @@ class AddTransactionActionHandler : ActionHandler {
             12 -> TransactionMonth.DECEMBER
             else -> throw IllegalArgumentException("Invalid month number")
         }
-        val year = handleYear()
+        val year = Calendar.getInstance().get(Calendar.YEAR)
+
         val type = when (handleType()) {
             1 -> TransactionType.INCOME
             2 -> TransactionType.EXPANSES
@@ -44,7 +48,7 @@ class AddTransactionActionHandler : ActionHandler {
         val date = TransactionDate(day = day, month = month, year = year)
         if (financialTrackerStorage.addTransaction(
                 Transaction(
-                    id = id,
+                    id = id.toString(),
                     amount = amount,
                     date = date,
                     category = category,
@@ -52,10 +56,9 @@ class AddTransactionActionHandler : ActionHandler {
                 )
             )
         ) {
-            val lastTransaction = financialTrackerStorage.getTransactionById(id)
+            val lastTransaction = financialTrackerStorage.getTransactionById(id.toString())
             println(
-                "Transaction number is ${lastTransaction?.id}\n" +
-                        "Transaction Amount is  ${lastTransaction?.amount}\n" +
+                "Transaction Amount is  ${lastTransaction?.amount}\n" +
                         "Transaction Date is ${lastTransaction?.date?.day}-${lastTransaction?.date?.month}-${lastTransaction?.date?.year}\n" +
                         "Transaction Type is ${lastTransaction?.type}\n" +
                         "Transaction Category ${lastTransaction?.category}"
@@ -70,6 +73,8 @@ class AddTransactionActionHandler : ActionHandler {
             val amount = readln()
             if (validator.validateAmount(amount)) {
                 return amount.toDouble()
+            } else {
+                println("Invalid input")
             }
         }
     }
@@ -81,7 +86,8 @@ class AddTransactionActionHandler : ActionHandler {
             val day = readln()
             if (validator.validateDay(day)) {
                 return day.toInt()
-
+            } else {
+                println("Invalid input")
             }
         }
     }
@@ -106,20 +112,12 @@ class AddTransactionActionHandler : ActionHandler {
             val month = readln()
             if (validator.validateMonth(month)) {
                 return month.toInt()
+            } else {
+                println("Invalid input")
             }
         }
     }
 
-    private fun handleYear(): Int {
-        while (true) {
-            println("Please Enter the year of the transaction")
-            println("year should be a number")
-            val year = readln()
-            if (validator.validateYear(year)) {
-                return year.toInt()
-            }
-        }
-    }
 
     private fun handleType(): Int {
         while (true) {
@@ -132,6 +130,8 @@ class AddTransactionActionHandler : ActionHandler {
             if (validator.validateType(type)) {
                 return type.toInt()
 
+            } else {
+                println("Invalid input")
             }
         }
     }
@@ -142,6 +142,8 @@ class AddTransactionActionHandler : ActionHandler {
             val category = readln()
             if (validator.validateCategory(category)) {
                 return category
+            } else {
+                println("Invalid input")
             }
         }
     }

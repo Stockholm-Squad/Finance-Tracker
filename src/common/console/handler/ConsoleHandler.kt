@@ -5,6 +5,8 @@ import src.common.helper.display.DisplayTransactions
 import src.delete.handler.DeleteTransactionActionHandler
 import src.delete.validation.DeleteTransactionActionValidator
 import src.report.handler.TransactionReportActionHandler
+import src.report.handler.TransactionReportDataHandler
+import src.report.validation.TransactionReportActionValidator
 import src.storage.IFinancialTrackerStorage
 import src.storage.MemoryFinancialTrackerStorage
 import src.view_transaction.handler.ViewTransactionActionHandler
@@ -35,7 +37,9 @@ class ConsoleHandler {
                 "3" -> UpdateTransactionActionHandler().handleAction(financialTrackerStorage)
                 "4" -> DeleteTransactionActionHandler(
                     DeleteTransactionActionValidator(), helper).handleAction(financialTrackerStorage)
-                "5" -> TransactionReportActionHandler().handleAction(financialTrackerStorage)
+                "5" -> TransactionReportActionHandler(
+                    TransactionReportActionValidator(), TransactionReportDataHandler()
+                ).handleAction(financialTrackerStorage)
                 "6" -> break
                 else -> println("Invalid Input, Please try again")
             }

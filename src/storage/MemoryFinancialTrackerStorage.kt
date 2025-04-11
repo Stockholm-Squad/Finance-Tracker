@@ -1,7 +1,7 @@
 package src.storage
 
 import src.model.Transaction
-import src.storage.IFinancialTrackerStorage
+import src.model.TransactionMonth
 
 class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     companion object {
@@ -15,7 +15,7 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     }
 
     override fun deleteTransactionById(transactionId: Int): Boolean {
-        TODO("Not yet implemented")
+        return allTransaction.removeIf { it.id == transactionId }
     }
 
     override fun updateTransaction(transaction: Transaction): Boolean {
@@ -33,7 +33,12 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
         return allTransaction.find { it.id == transactionId }
     }
 
-    override fun getTransactionsByMonth(month: Int): List<Transaction>? {
-        return null
+    override fun getTransactionsByMonth(transactionMonth: TransactionMonth): List<Transaction>? {
+        val result: MutableList<Transaction>? = null
+        allTransaction.forEach{ transaction ->
+            if (transaction.date.month == transactionMonth)
+            result?.add(transaction)
+        }
+        return result
     }
 }

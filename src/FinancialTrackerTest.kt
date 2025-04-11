@@ -313,12 +313,7 @@ fun getAllTransaction(): List<Transaction>? {
 }
 
 
-/**
- * Function to check the test case result and print success or failure.
- * @param name The name of the test case.
- * @param result The result obtained from the function.
- * @param expectedResult The expected correct result.
- */
+
 fun check(name: String, result: Boolean, expectedResult: Boolean) {
     if (result == expectedResult) {
         println("Success $name")
@@ -333,7 +328,7 @@ fun addTransaction(amount: String, day: String, month: String, year: String, typ
 }
 
 fun testCaseForDeleteTransaction() {
-
+    // region delete
     fun deleteTransactionById(id: String): Boolean {
         return false
     }
@@ -381,6 +376,7 @@ fun testCaseForDeleteTransaction() {
         result = deleteTransactionById("5"),
         expectedResult = false
     )
+    // endregion
 
 }
 

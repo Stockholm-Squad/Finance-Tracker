@@ -8,6 +8,10 @@ import src.storage.MemoryFinancialTrackerStorage
 import src.update.validation.IUpdateTransactionActionValidator
 import src.update.validation.UpdateTransactionActionValidator
 
+fun main(){
+    val validator = UpdateTransactionActionValidator()
+    testUpdateTransaction(validator)
+}
 
 fun testUpdateTransaction(updateTransactionActionValidator: IUpdateTransactionActionValidator) {
 

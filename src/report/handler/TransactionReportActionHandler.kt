@@ -4,13 +4,12 @@ import src.common.console.handler.ActionHandler
 import src.model.Transaction
 import src.model.TransactionMonth
 import src.report.validation.ITransactionReportActionValidator
-import src.report.validation.TransactionReportActionValidator
 import src.storage.IFinancialTrackerStorage
 
-class TransactionReportActionHandler : ActionHandler {
-
-    private val transactionReportActionValidator: ITransactionReportActionValidator = TransactionReportActionValidator()
-    private val transactionReportDataHandler: ITransactionReportDataHandler = TransactionReportDataHandler()
+class TransactionReportActionHandler(
+    private val transactionReportActionValidator: ITransactionReportActionValidator,
+    private val transactionReportDataHandler: ITransactionReportDataHandler
+) : ActionHandler {
 
     override fun handleAction(financialTrackerStorage: IFinancialTrackerStorage) {
         println("Please Enter Month to view Monthly Report : ")

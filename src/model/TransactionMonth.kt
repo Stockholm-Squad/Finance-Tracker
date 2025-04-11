@@ -19,7 +19,7 @@ enum class TransactionMonth(val orderId: Int) {
         fun getTransactionMonth(transactionMonthName: String?): TransactionMonth? {
             if (transactionMonthName == null) return null
             entries.forEach { transactionMonth ->
-                if (transactionMonth.name == transactionMonthName) return transactionMonth
+                if (transactionMonth.name == transactionMonthName.toUpperCase()) return transactionMonth
             }
             return null
         }

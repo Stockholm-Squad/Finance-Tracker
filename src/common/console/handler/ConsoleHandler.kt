@@ -15,6 +15,7 @@ import src.view_transaction.handler.ViewTransactionActionHandler
 
 class ConsoleHandler {
     fun welcomeMessage() {
+        val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
         while (true) {
             println("----------------------------------------------")
             println("----------------------------------------------")
@@ -30,8 +31,6 @@ class ConsoleHandler {
             )
             println("----------------------------------------------")
             val choice = readlnOrNull()
-            val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
-            dummyData(financialTrackerStorage)
             when (choice) {
                 "1" -> AddTransactionActionHandler().handleAction(financialTrackerStorage)
                 "2" -> ViewTransactionActionHandler().handleAction(financialTrackerStorage)
@@ -42,47 +41,6 @@ class ConsoleHandler {
                 else -> println("Invalid Input, Please try again")
             }
         }
-    }
-
-    // for delete
-    fun dummyData(financialTrackerStorage: IFinancialTrackerStorage){
-
-        (financialTrackerStorage as MemoryFinancialTrackerStorage).allTransaction.add(
-            Transaction(
-                id = 1,
-                amount = 1000.0,
-                date = TransactionDate(1, TransactionMonth.APRIL,2023),
-                category = "Food",
-                type = TransactionType.EXPANSES
-            )
-        )
-        (financialTrackerStorage as MemoryFinancialTrackerStorage).allTransaction.add(
-            Transaction(
-                id = 2,
-                amount = 1000.0,
-                date = TransactionDate(1, TransactionMonth.APRIL,2023),
-                category = "Food",
-                type = TransactionType.EXPANSES
-            )
-        )
-        (financialTrackerStorage as MemoryFinancialTrackerStorage).allTransaction.add(
-            Transaction(
-                id = 3,
-                amount = 1000.0,
-                date = TransactionDate(1, TransactionMonth.APRIL,2023),
-                category = "Food",
-                type = TransactionType.EXPANSES
-            )
-        )
-        (financialTrackerStorage as MemoryFinancialTrackerStorage).allTransaction.add(
-            Transaction(
-                id = 4,
-                amount = 1000.0,
-                date = TransactionDate(1, TransactionMonth.APRIL,2023),
-                category = "Food",
-                type = TransactionType.EXPANSES
-            )
-        )
     }
 }
 

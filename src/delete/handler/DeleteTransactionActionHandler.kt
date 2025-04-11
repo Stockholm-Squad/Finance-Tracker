@@ -12,26 +12,23 @@ class DeleteTransactionActionHandler(val validator: IDeleteTransactionActionHand
         println("Enter the id of the transaction to delete:")
         while(true){
             val id = readlnOrNull()
-            if(validator.checkIDisInt(id)){
-                if (allTransactions != null) {
-                    if(validator.checkIDinList(allTransactions.toList() , id?.toInt() ?: 0)){
-                        if(validator.checkConfirmation()){
-                            println("Transaction deleted successfully.")
-                            break
-                        }else{
-                            println("Action cancelled.")
-                            break
-                        }
-                    } else {
-                        println("id not found.")
+            if(validator.checkID(allTransactions!!.toList() , id)){
+                if(validator.checkConfirmation()){
+                    if(financialTrackerStorage.deleteTransactionById(id!!.toInt())){
+                        println("Transaction deleted successfully.")
+                        break
+                    }else{
+                        println("error deleting transaction.")
                         continue
                     }
+                }else{
+                    println("Action cancelled.")
+                    break
                 }
-            }else{
-                println("Invalid input.")
+            } else {
+                println("Invalid input or not found.")
                 continue
             }
-
         }
     }
 

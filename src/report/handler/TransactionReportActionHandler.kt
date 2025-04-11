@@ -18,7 +18,7 @@ class TransactionReportActionHandler : ActionHandler {
             "like ${TransactionMonth.JANUARY.orderId}.${TransactionMonth.JANUARY.name}" +
                     ", ${TransactionMonth.FEBRUARY.orderId}.${TransactionMonth.FEBRUARY.name}" +
                     ", ${TransactionMonth.MARCH.orderId}.${TransactionMonth.MARCH.name}" +
-                    ", ${TransactionMonth.APRIL.name}.${TransactionMonth.APRIL.name}"
+                    ", ${TransactionMonth.APRIL.orderId}.${TransactionMonth.APRIL.name}"
         )
         val month = readlnOrNull()
 
@@ -42,9 +42,9 @@ class TransactionReportActionHandler : ActionHandler {
     }
 
     private fun viewMonthlyReport(transactionList: List<Transaction>) {
-        for (i in 0..transactionList.size) {
+        for (i in transactionList.indices) {
             println(
-                "Transaction Number = ${i}\n" +
+                "Transaction Number:${i + 1}\n" +
                         "amount = ${transactionList[i].amount}, " +
                         "day = ${transactionList[i].date.day}, " +
                         "month = ${transactionList[i].date.month}, " +

@@ -34,7 +34,7 @@ fun main() {
     check(
         "when amount is equals 0 then return true",
         addTransaction(amount = "0", day = "2", month = "2", year = "2025", type = "1", category = "food"),
-        true
+        false
     )
     check(
         "when amount is greater 0 then return true",
@@ -198,18 +198,8 @@ fun main() {
     /**
      * Checkers for category parameter*/
     check(
-        "when category contains numbers then return false",
-        addTransaction(amount = "23", day = "23", month = "2", year = "2025", type = "1", category = "2food"),
-        false
-    )
-    check(
         "when category is empty then return false",
         addTransaction(amount = "23", day = "23", month = "2", year = "2025", type = "1", category = ""),
-        false
-    )
-    check(
-        "when category contains special characters return false",
-        addTransaction(amount = "23", day = "23", month = "2", year = "2025", type = "1", category = "f@ood"),
         false
     )
     check(

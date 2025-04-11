@@ -4,10 +4,14 @@ import src.model.Transaction
 import src.model.TransactionMonth
 
 class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
-    val allTransaction: MutableList<Transaction> = mutableListOf()
+    companion object {
+        private val allTransaction: MutableList<Transaction> = mutableListOf()
+    }
 
     override fun addTransaction(transaction: Transaction): Boolean {
-        TODO("Not yet implemented")
+        allTransaction.add(transaction)
+
+        return true
     }
 
     override fun deleteTransactionById(transactionId: Int): Boolean {
@@ -26,7 +30,7 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     override fun getTransactionById(transactionId: Int): Transaction? {
 
 
-        return allTransaction.find { it.id == transactionId}
+        return allTransaction.find { it.id == transactionId }
     }
 
     override fun getTransactionsByMonth(transactionMonth: TransactionMonth): List<Transaction>? {

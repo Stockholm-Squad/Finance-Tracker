@@ -14,10 +14,11 @@ class TransactionReportActionHandler : ActionHandler {
 
     override fun handleAction(financialTrackerStorage: IFinancialTrackerStorage) {
         println("Please Enter Month to view Monthly Report : ")
-        println("like ${TransactionMonth.JANUARY.orderId}.${TransactionMonth.JANUARY.name}" +
-                ", ${TransactionMonth.FEBRUARY.orderId}.${TransactionMonth.FEBRUARY.name}"+
-                ", ${TransactionMonth.MARCH.orderId}.${TransactionMonth.MARCH.name}"+
-                ", ${TransactionMonth.APRIL.name}.${TransactionMonth.APRIL.name}"
+        println(
+            "like ${TransactionMonth.JANUARY.orderId}.${TransactionMonth.JANUARY.name}" +
+                    ", ${TransactionMonth.FEBRUARY.orderId}.${TransactionMonth.FEBRUARY.name}" +
+                    ", ${TransactionMonth.MARCH.orderId}.${TransactionMonth.MARCH.name}" +
+                    ", ${TransactionMonth.APRIL.name}.${TransactionMonth.APRIL.name}"
         )
         val month = readlnOrNull()
 
@@ -41,8 +42,17 @@ class TransactionReportActionHandler : ActionHandler {
     }
 
     private fun viewMonthlyReport(transactionList: List<Transaction>) {
-        transactionList.forEach { transaction ->
-            println("id = ${transaction.id},amount = ${transaction.amount}, day = ${transaction.date.day}, month = ${transaction.date.month}, year = ${transaction.date.year}, type = ${transaction.type}, category = ${transaction.category}")
+        for (i in 0..transactionList.size) {
+            println(
+                "Transaction Number = ${i}\n" +
+                        "amount = ${transactionList[i].amount}, " +
+                        "day = ${transactionList[i].date.day}, " +
+                        "month = ${transactionList[i].date.month}, " +
+                        "year = ${transactionList[i].date.year}, " +
+                        "type = ${transactionList[i].type}, " +
+                        "category = ${transactionList[i].category}"
+            )
+
         }
     }
 

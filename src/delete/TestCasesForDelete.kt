@@ -1,7 +1,7 @@
 package src.delete
 
 import src.delete.validation.DeleteTransactionActionValidator
-import src.delete.validation.IDeleteTransactionActionHandler
+import src.delete.validation.IDeleteTransactionActionValidator
 import src.model.Transaction
 import src.model.TransactionDate
 import src.model.TransactionMonth
@@ -16,8 +16,8 @@ fun testCaseForDeleteTransaction() {
     val transactions: MutableList<Transaction> = mutableListOf()
     // region delete
     fun deleteTransactionById(id: String): Boolean {
-        val validator : IDeleteTransactionActionHandler = DeleteTransactionActionValidator()
-        return validator.checkID(transactions , id)
+        val validator : IDeleteTransactionActionValidator = DeleteTransactionActionValidator()
+        return validator.checkTransactionIndex(transactions , id)
     }
 
     src.check(

@@ -1,17 +1,21 @@
 package src.storage
 
 import src.model.Transaction
-import src.storage.IFinancialTrackerStorage
+import src.model.TransactionMonth
 
 class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
-    val allTransaction: MutableList<Transaction> = mutableListOf()
+    companion object {
+        private val allTransaction: MutableList<Transaction> = mutableListOf()
+    }
 
     override fun addTransaction(transaction: Transaction): Boolean {
-        TODO("Not yet implemented")
+        allTransaction.add(transaction)
+
+        return true
     }
 
     override fun deleteTransactionById(transactionId: Int): Boolean {
-        TODO("Not yet implemented")
+        return allTransaction.removeIf { it.id == transactionId }
     }
 
     override fun updateTransaction(transaction: Transaction): Boolean {
@@ -32,10 +36,15 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     override fun getTransactionById(transactionId: Int): Transaction? {
 
 
-        return allTransaction.find { it.id == transactionId}
+        return allTransaction.find { it.id == transactionId }
     }
 
-    override fun getTransactionsByMonth(month: Int): List<Transaction>? {
-        return null
+    override fun getTransactionsByMonth(transactionMonth: TransactionMonth): List<Transaction>? {
+        val result: MutableList<Transaction>? = null
+        allTransaction.forEach{ transaction ->
+            if (transaction.date.month == transactionMonth)
+            result?.add(transaction)
+        }
+        return result
     }
 }

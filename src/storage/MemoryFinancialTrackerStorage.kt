@@ -11,7 +11,7 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     }
 
     override fun deleteTransactionById(transactionId: Int): Boolean {
-        TODO("Not yet implemented")
+        return allTransaction.removeIf { it.id == transactionId }
     }
 
     override fun updateTransaction(transaction: Transaction): Boolean {

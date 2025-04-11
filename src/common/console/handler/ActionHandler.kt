@@ -4,6 +4,6 @@ import src.storage.IFinancialTrackerStorage
 
 interface ActionHandler {
     fun handleAction(
-        financialTrackerRepository: IFinancialTrackerStorage
+        financialTrackerStorage: IFinancialTrackerStorage
     )
 }

@@ -1,27 +1,30 @@
 package src.delete.handler
 
 import src.common.console.handler.ActionHandler
+import src.common.helper.display.IDisplayTransaction
+import src.delete.validation.DeleteTransactionActionValidator
 import src.delete.validation.IDeleteTransactionActionHandler
 import src.model.Transaction
 import src.storage.IFinancialTrackerStorage
 
-class DeleteTransactionActionHandler(val validator: IDeleteTransactionActionHandler) : ActionHandler {
+class DeleteTransactionActionHandler(private val validator : IDeleteTransactionActionHandler,private val helper: IDisplayTransaction) : ActionHandler {
     override fun handleAction(financialTrackerStorage: IFinancialTrackerStorage) {
         val allTransactions = financialTrackerStorage.getAllTransactions()
-        if (!showAllTransactions(allTransactions)) return
+        if (!helper.displayAllTransactions()) return
+
         println("Enter the id of the transaction to delete:")
         while(true){
             val id = readlnOrNull()
             if(validator.checkID(allTransactions!!.toList() , id)){
                 if(validator.checkConfirmation()){
-                    if(financialTrackerStorage.deleteTransactionById(id!!.toInt())){
+                    if(validator.deleteTransaction(financialTrackerStorage , id)){
                         println("Transaction deleted successfully.")
                         break
-                    }else{
+                    } else {
                         println("error deleting transaction.")
                         continue
                     }
-                }else{
+                } else {
                     println("Action cancelled.")
                     break
                 }
@@ -30,26 +33,6 @@ class DeleteTransactionActionHandler(val validator: IDeleteTransactionActionHand
                 continue
             }
         }
-    }
-
-    // for delete
-    private fun showAllTransactions(allTransactions: List<Transaction>?) : Boolean {
-        if (allTransactions?.isEmpty() == true) {
-            println("No transactions to delete.")
-            return false
-        }
-
-        allTransactions?.forEach{ it->
-            println(
-                "ID : ${it.id} \n" +
-                "Amount : ${it.amount} \n" +
-                "Date : ${it.date} \n" +
-                "Category : ${it.category} \n" +
-                "Type : ${it.type} \n" +
-                "------------------\n"
-            )
-        }
-        return true;
     }
 
 }

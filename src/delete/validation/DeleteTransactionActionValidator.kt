@@ -1,6 +1,7 @@
 package src.delete.validation
 
 import src.model.Transaction
+import src.storage.IFinancialTrackerStorage
 
 class DeleteTransactionActionValidator : IDeleteTransactionActionHandler {
 
@@ -20,5 +21,10 @@ class DeleteTransactionActionValidator : IDeleteTransactionActionHandler {
             }
         } ?: false
     }
+
+    override fun deleteTransaction(financialTrackerStorage: IFinancialTrackerStorage, id: String?) : Boolean{
+        return financialTrackerStorage.deleteTransactionById(id!!.toInt())
+    }
+
 
 }

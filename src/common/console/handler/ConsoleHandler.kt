@@ -1,6 +1,7 @@
 package src.common.console.handler
 
 import src.add.console.handler.AddTransactionActionHandler
+import src.common.helper.display.DisplayTransactions
 import src.delete.handler.DeleteTransactionActionHandler
 import src.delete.validation.DeleteTransactionActionValidator
 import src.model.Transaction
@@ -14,8 +15,9 @@ import src.update.handler.UpdateTransactionActionHandler
 import src.view_transaction.handler.ViewTransactionActionHandler
 
 class ConsoleHandler {
+    private val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
+    private val helper = DisplayTransactions(financialTrackerStorage.getAllTransactions()!!)
     fun welcomeMessage() {
-        val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
         while (true) {
             println("----------------------------------------------")
             println("----------------------------------------------")
@@ -35,7 +37,7 @@ class ConsoleHandler {
                 "1" -> AddTransactionActionHandler().handleAction(financialTrackerStorage)
                 "2" -> ViewTransactionActionHandler().handleAction(financialTrackerStorage)
                 "3" -> UpdateTransactionActionHandler().handleAction(financialTrackerStorage)
-                "4" -> DeleteTransactionActionHandler(DeleteTransactionActionValidator()).handleAction(financialTrackerStorage)
+                "4" -> DeleteTransactionActionHandler(DeleteTransactionActionValidator(),helper).handleAction(financialTrackerStorage)
                 "5" -> TransactionReportActionHandler().handleAction(financialTrackerStorage)
                 "6" -> break
                 else -> println("Invalid Input, Please try again")

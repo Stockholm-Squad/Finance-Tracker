@@ -41,7 +41,7 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     }
 
     override fun getTransactionsByMonth(transactionMonth: TransactionMonth): List<Transaction>? {
-        val result: MutableList<Transaction>? = null
+        val result: MutableList<Transaction>? = mutableListOf()
         allTransaction.forEach{ transaction ->
             if (transaction.date.month == transactionMonth)
             result?.add(transaction)

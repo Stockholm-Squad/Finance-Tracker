@@ -4,5 +4,5 @@ interface IViewTransactionActionValidator {
 
     fun validateIdNotString(id:String):Boolean
     fun validateIdNotOutOfRange(id:Int,transactionsSize:Int):Boolean
-    fun validateId(id:String?,transactionsSize: Int):Boolean
+    fun validateId(id:String?):Boolean
 }

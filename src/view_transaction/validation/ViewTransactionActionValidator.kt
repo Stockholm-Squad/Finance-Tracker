@@ -7,23 +7,22 @@ class ViewTransactionActionValidator : IViewTransactionActionValidator {
             id.toInt()
             true
         } catch (e: NumberFormatException) {
-            println("Invalid Input, Please try again")
+
             false
         }
     }
 
     override fun validateIdNotOutOfRange(id: Int, transactionsSize: Int): Boolean {
-        return if (id in 1..transactionsSize) true else {
-            println("Invalid Input, Please try again")
+        return if (id in 1..transactionsSize) true
+        else {
+
             false
         }
     }
 
-    override fun validateId(id: String?, transactionsSize: Int): Boolean {
+    override fun validateId(id: String?): Boolean {
         return if (id != null) {
-            if (validateIdNotString(id)) {
-               if ( validateIdNotOutOfRange(id.toInt(), transactionsSize)) return true else false
-            } else false
+            return true
         } else false
     }
 

@@ -1,13 +1,12 @@
 package src
 
 import src.model.Transaction
-import src.model.TransactionCheckInput
 import src.storage.IFinancialTrackerStorage
 import src.storage.MemoryFinancialTrackerStorage
 
 fun main() {
-    testUpdateTransaction()
-
+    testCaseForDeleteTransaction()
+    testGetTransactionMonthlyReport()
 // region add
     /**
      * Checkers for amount parameter*/
@@ -302,7 +301,12 @@ fun getAllTransaction(): List<Transaction>? {
 }
 
 
-
+/**
+ * Function to check the test case result and print success or failure.
+ * @param name The name of the test case.
+ * @param result The result obtained from the function.
+ * @param expectedResult The expected correct result.
+ */
 fun check(name: String, result: Boolean, expectedResult: Boolean) {
     if (result == expectedResult) {
         println("Success $name")
@@ -316,447 +320,130 @@ fun addTransaction(amount: String, day: String, month: String, year: String, typ
     return false
 }
 
+fun testCaseForDeleteTransaction() {
 
-fun testUpdateTransaction() {
-    fun isValidTransactionId(id: String): Boolean {
-        return true
-    }
-
-    fun isValidCheckInput(input: String): Boolean {
-        return true
-    }
-
-    fun updateTransaction(transactionId: Int, transactionCheckInput: TransactionCheckInput, newValue: String): Boolean {
+    fun deleteTransactionById(id: String): Boolean {
         return false
     }
 
-    // region Update
-    /**
-     * Checkers for Valid (ID) */
     check(
-        name = "When id valid should return true",
-        result = isValidTransactionId("1"),
+        name = "delete existing transaction (ex:id = 2) is should return true ",
+        result = deleteTransactionById("2"),
+        expectedResult = true
+    )
+
+
+    check(
+        name = "invalid delete non-existing transaction id = 999 it should return false",
+        result = deleteTransactionById("999"),
+        expectedResult = false
+    )
+
+    check(
+        name = "invalid delete transaction with negative ID id = -1 it should return false",
+        result = deleteTransactionById("-1"),
+        expectedResult = false
+    )
+
+    check(
+        name = "invalid delete transaction with id 0 it should return false",
+        result = deleteTransactionById("0"),
+        expectedResult = false
+    )
+
+
+    check(
+        name = "delete transaction but have no transaction(first time that run app) it should return false",
+        result = deleteTransactionById("1"),
+        expectedResult = false
+    )
+
+    check(
+        name = "enter invalid id ex:user input = 1a it should return false",
+        result = deleteTransactionById("1a"),
+        expectedResult = false
+    )
+
+    check(
+        name = "enter invalid id ex:user input = 5 but 5 not exist it should return false",
+        result = deleteTransactionById("5"),
+        expectedResult = false
+    )
+
+}
+
+fun testGetTransactionMonthlyReport() {
+    /** Invalid test cases */
+
+    check(
+        name = "When month < 1 it should return null",
+        result = getTransactionByMonth("-13") == null,
         expectedResult = true
     )
 
     check(
-        name = "When id has space start & end return true",
-        result = isValidTransactionId(" 12345 "),
+        name = "When month > 12 it should return null",
+        result = getTransactionByMonth("13") == null,
         expectedResult = true
     )
-
-    /**
-     * Checkers for InValid (ID) */
     check(
-        name = "When id has char should return false",
-        result = isValidTransactionId("a"),
-        expectedResult = false
-    )
-
-    check(
-        name = "When id has char at middle should return false",
-        result = isValidTransactionId("123a45"),
-        expectedResult = false
-    )
-
-    check(
-        name = "When id has space at middle should return false",
-        result = isValidTransactionId("123 45"),
-        expectedResult = false
-    )
-
-    check(
-        name = "When id has special character should return false",
-        result = isValidTransactionId("123@45"),
-        expectedResult = false
-    )
-
-    check(
-        name = "When id out of range should return false",
-        result = isValidTransactionId("123456789"),
-        expectedResult = false
-    )
-
-    check(
-        name = "When id out of range (<1)should return false",
-        result = isValidTransactionId("0"),
-        expectedResult = false
-    )
-
-    check(
-        name = "When id is empty should return false",
-        result = isValidTransactionId(""),
-        expectedResult = false
-    )
-
-    /**
-     * Checkers for Valid Check Input */
-    check(
-        name = "when update type input is valid should return true",
-        result = isValidCheckInput("1"),
+        name = "When month is string it should return null",
+        result = getTransactionByMonth("abc") == null,
         expectedResult = true
     )
 
     check(
-        name = "when update type start & end with space should return true",
-        result = isValidCheckInput(" 1 "),
-        expectedResult = true
-    )
-
-    /**
-     * Checkers for InValid Check Input */
-    check(
-        name = "when update type out of range should return false",
-        result = isValidCheckInput("7"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when update type is character should return false",
-        result = isValidCheckInput("a"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when update type is special character should return false",
-        result = isValidCheckInput("@"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when enter more than one digit should return false",
-        result = isValidCheckInput("123456"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when input is empty should return false",
-        result = isValidCheckInput(""),
-        expectedResult = false
-    )
-
-    /**
-     * Checkers for Valid Transaction Category */
-    check(
-        name = "When category is valid should return true",
-        result = updateTransaction(1, TransactionCheckInput.CATEGORY, "Food"),
+        name = "When month is empty it should return null",
+        result = getTransactionByMonth("") == null,
         expectedResult = true
     )
 
     check(
-        name = "When category start & end with space should return true",
-        result = updateTransaction(1, TransactionCheckInput.CATEGORY, " Food "),
+        name = "When month contains space between it should return null",
+        result = getTransactionByMonth("1 1") == null,
         expectedResult = true
     )
 
     check(
-        name = "When category has space at middle should return true",
-        result = updateTransaction(1, TransactionCheckInput.CATEGORY, "Food Expenses"),
+        name = "When month is floating or double it should return null",
+        result = getTransactionByMonth("1.0") == null,
+        expectedResult = true
+    )
+    check(
+        name = "When month starts with leading 0 it should return null",
+        result = getTransactionByMonth("011") == null,
+        expectedResult = true
+    )
+    check(
+        name = "When month is not exist it should return null",
+        result = getTransactionByMonth("12") == null,
+        expectedResult = true
+    )
+
+    /** Valid test cases */
+    check(
+        name = "when month is exist for one time it should return value",
+        result = getTransactionByMonth("1")?.isNotEmpty() == true,
+        expectedResult = true
+    )
+    check(
+        name = "when month is exist for 3 times it should return value",
+        result = getTransactionByMonth("1")?.size == 3,
         expectedResult = true
     )
 
     check(
-        name = "When category has special character should return true",
-        result = updateTransaction(1, TransactionCheckInput.CATEGORY, "Fo@od"),
+        name = "when month contains spaces around it should return value",
+        result = getTransactionByMonth(" 2 ")?.isNotEmpty() == true,
         expectedResult = true
     )
-
     check(
-        name = "When category has number should return true",
-        result = updateTransaction(1, TransactionCheckInput.CATEGORY, "F235ood"),
+        name = "when month is arabic digits it should return value",
+        result = getTransactionByMonth("١")?.isNotEmpty() == true,
         expectedResult = true
     )
+}
 
-    /**
-     * Checkers for InValid Transaction Category */
-    check(
-        name = "When category is empty should return false",
-        result = updateTransaction(1, TransactionCheckInput.CATEGORY, ""),
-        expectedResult = false
-    )
-
-
-    /**
-     * Checkers for Valid Transaction Type */
-    check(
-        name = "When type is valid should return true",
-        result = updateTransaction(1, TransactionCheckInput.TYPE, "1"),
-        expectedResult = true
-    )
-
-    check(
-        name = "When type start & end with space should return true",
-        result = updateTransaction(1, TransactionCheckInput.TYPE, " 1 "),
-        expectedResult = true
-    )
-
-    /**
-     * Checkers for Invalid Transaction Type */
-    check(
-        name = "When type has special char should return false",
-        result = updateTransaction(1, TransactionCheckInput.TYPE, "@"),
-        expectedResult = false
-    )
-
-    check(
-        name = "When type is empty should return false",
-        result = updateTransaction(1, TransactionCheckInput.TYPE, ""),
-        expectedResult = false
-    )
-
-    check(
-        name = "When type char should return false",
-        result = updateTransaction(1, TransactionCheckInput.TYPE, "a"),
-        expectedResult = false
-    )
-
-    check(
-        name = "When type out of range should return false",
-        result = updateTransaction(1, TransactionCheckInput.TYPE, "3"),
-        expectedResult = false
-    )
-
-    /**
-     * Checkers for Valid Transaction Amount */
-    check(
-        name = "when enter valid amount (Double value) should return true",
-        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "5000.0"),
-        expectedResult = true
-    )
-
-    check(
-        name = "when enter valid amount (Int value) should return true",
-        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "5000"),
-        expectedResult = true
-    )
-
-    check(
-        name = "when enter input start  & end with space should return true",
-        result = updateTransaction(1, TransactionCheckInput.AMOUNT, " 5000"),
-        expectedResult = true
-    )
-
-    /**
-     * Checkers for InValid Transaction Amount */
-    check(
-        name = "when enter negative number should return false",
-        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "-5569"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when enter character with number should return false",
-        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "12aa"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when enter character should return false",
-        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "aa"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when enter special character with number should return false",
-        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "12#$2"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when enter valid amount (number with comma instead of dots) should return false",
-        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "5,000,000"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when enter empty input should return false",
-        result = updateTransaction(1, TransactionCheckInput.AMOUNT, ""),
-        expectedResult = false
-    )
-
-    check(
-        name = "when input has space at middle should return false",
-        result = updateTransaction(1, TransactionCheckInput.AMOUNT, "4,5 00"),
-        expectedResult = false
-    )
-
-    /**
-     * Checkers for Valid Date*/
-    check(
-        name = "when user enters valid date format dd/MM/yyyy",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "10/04/2025"),
-        expectedResult = true
-    )
-
-    check(
-        name = "when user enters valid leap year date",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "29/02/2024"),
-        expectedResult = true
-    )
-
-    check(
-        name = "when user enters valid date with single-digit day and month",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "1/1/2023"),
-        expectedResult = true
-    )
-
-    check(
-        name = "when user enters valid date end of year",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "31/12/2023"),
-        expectedResult = true
-    )
-
-    check(
-        name = "when user enters valid date with extra leading zeros",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "09/08/2022"),
-        expectedResult = true
-    )
-
-    /**
-     * Checkers for InValid Date*/
-    check(
-        name = "when user enters invalid date format using dashes",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "2025-04-10"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters day out of valid range",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "32/01/2024"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters month out of valid range",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "15/13/2024"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters year that is too small",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "15/05/0001"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters letters instead of numbers in date",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "April/10/2025"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters empty input for date",
-        result = updateTransaction(1, TransactionCheckInput.DATE, ""),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters date in wrong format yyyy-MM-dd",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "2025-04-10"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters invalid date with slashes reversed",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "04\\10\\2025"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters alphabet in date",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "aa/bb/cccc"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters empty string for date",
-        result = updateTransaction(1, TransactionCheckInput.DATE, ""),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters date with missing parts",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "10/04"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters invalid day in date",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "32/01/2023"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters invalid month in date",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "10/13/2023"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters invalid leap day in non-leap year",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "29/02/2023"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters special characters in date",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "@1/0*/202#"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters only spaces in date",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "   "),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters date with dash instead of slash",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "10-04-2025"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters letters instead of numbers",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "dd/MM/yyyy"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters date with month as word",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "10/April/2025"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters date with extra slashes",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "10//04//2025"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters date with missing year",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "10/04/"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters date with negative values",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "-10/-04/2025"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters date with zeros only",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "00/00/0000"),
-        expectedResult = false
-    )
-
-    check(
-        name = "when user enters future date beyond 2100",
-        result = updateTransaction(1, TransactionCheckInput.DATE, "10/04/2500"),
-        expectedResult = false
-    )
-
-    // endregion
+fun getTransactionByMonth(month: String): List<Transaction>? {
+    return null
 }

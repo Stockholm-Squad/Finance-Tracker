@@ -19,7 +19,13 @@ class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     }
 
     override fun updateTransaction(transaction: Transaction): Boolean {
-        TODO("Not yet implemented")
+        val index = allTransaction.indexOfFirst { it.id == transaction.id }
+        return if (index != -1) {
+            allTransaction[index] = transaction
+            true
+        } else {
+            false
+        }
     }
 
     override fun getAllTransactions(): List<Transaction>? {

@@ -301,13 +301,13 @@ fun main() {
  * @param result The result obtained from the function.
  * @param expectedResult The expected correct result.
  */
-fun check(name: String, result: Boolean, expectedResult: Boolean) {
+/*fun check(name: String, result: Boolean, expectedResult: Boolean) {
     if (result == expectedResult) {
         println("Success $name")
     } else {
         println("Failed $name")
     }
-}
+}*/
 
 fun addTransaction(amount: String, day: String, month: String, year: String, type: String, category: String): Boolean {
 

@@ -8,16 +8,23 @@ class FileFinancialTrackerStorage(
     private val fileHelper: IFileHelper
 ) : IFinancialTrackerStorage {
     companion object {
-        var allTransaction: MutableList<Transaction>? = mutableListOf()
+        val allTransaction: MutableList<Transaction>? = mutableListOf()
     }
 
     init {
-        allTransaction = fileHelper.loadTransactions()
-
+        val allTransactionFromFile = fileHelper.loadTransactions()
+        if (allTransactionFromFile != null) {
+            allTransaction?.addAll(allTransactionFromFile)
+        }
     }
 
     override fun addTransaction(transaction: Transaction): Boolean {
-        allTransaction?.add(transaction)
+        println(transaction)
+        try{
+            allTransaction?.add(transaction)
+        }catch (ex:Exception){
+            println(ex.message)
+        }
         try {
             fileHelper.saveTransactions(allTransaction?.toList())
             return true

@@ -10,7 +10,7 @@ class FileHelper(fileName: String) : IFileHelper {
 
     override fun loadTransactions(): MutableList<Transaction>? {
         if (!file.exists()) {
-            return null
+            return mutableListOf()
         }
 
         if (file.length() == 0L) {

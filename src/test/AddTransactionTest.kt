@@ -7,8 +7,9 @@ class AddTransactionTest : TransactionTest() {
     override fun runTest() {
         /**
          * Checkers for amount parameter*/
-        println("<------------------------Add Transaction Test---------------------------->")
-        println("<------------------------Checkers for amount parameter---------------------------->")
+        println("<------------------------ Add Transactions Test ---------------------------->")
+        println("\n-------------------- Amount --------------------")
+
         check(
             "when amount is less than 0 then return false",
             addTransaction(amount = "-1", day = "2", month = "2", type = "1", category = "food"),
@@ -41,7 +42,8 @@ class AddTransactionTest : TransactionTest() {
         )
         /**
          * Checkers for day parameter*/
-        println("<------------------------Checkers for day parameter---------------------------->")
+        println("\n-------------------- Day --------------------")
+
         check(
             "when day equals 0 then return false",
             addTransaction(amount = "23", day = "0", month = "2", type = "1", category = "food"),
@@ -79,7 +81,7 @@ class AddTransactionTest : TransactionTest() {
         )
         /**
          * Checkers for month parameter*/
-        println("<------------------------Checkers for month parameter---------------------------->")
+        println("\n-------------------- Month --------------------")
         check(
             "when month equals 0 then return false",
             addTransaction(amount = "23", day = "23", month = "0", type = "1", category = "food"),
@@ -145,7 +147,7 @@ class AddTransactionTest : TransactionTest() {
         )
         /**
          * Checkers for category parameter*/
-        println("<------------------------Checkers for category parameter---------------------------->")
+        println("\n-------------------- Category --------------------")
         check(
             "when category is empty then return false",
             addTransaction(amount = "23", day = "23", month = "2", type = "1", category = ""),
@@ -173,7 +175,7 @@ class AddTransactionTest : TransactionTest() {
             addTransaction(amount = "23", day = "23", month = "2", type = "1", category = "food"),
             true
         )
-        println("<------------------------End of Add Transaction test---------------------------->")
+        println("<------------------------ End of Add Transaction test ---------------------------->")
     }
 
 

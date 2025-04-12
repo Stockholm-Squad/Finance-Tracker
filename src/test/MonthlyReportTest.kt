@@ -20,49 +20,44 @@ class MonthlyReportTest : TransactionTest() {
         val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
         println("\n<-----------------Monthly Report Test-------------------->")
         check(
-            name = "When month < 1 it should return null",
+            name = "When month < 1 it should return false",
             result = transactionReportActionValidator.isMonthValid("-13"),
             expectedResult = false
         )
 
         check(
-            name = "When month > 12 it should return null",
+            name = "When month > 12 it should return false",
             result = transactionReportActionValidator.isMonthValid("13"),
             expectedResult = false
         )
         check(
-            name = "When month is string it should return null",
+            name = "When month is string it should return false",
             result = transactionReportActionValidator.isMonthValid("abc"),
             expectedResult = false
         )
 
         check(
-            name = "When month is empty it should return null",
+            name = "When month is empty it should return false",
             result = transactionReportActionValidator.isMonthValid(""),
             expectedResult = false
         )
 
         check(
-            name = "When month contains space between it should return null",
+            name = "When month contains space between it should return false",
             result = transactionReportActionValidator.isMonthValid("1 1"),
             expectedResult = false
         )
 
         check(
-            name = "When month is floating or double it should return null",
+            name = "When month is floating or double it should return false",
             result = transactionReportActionValidator.isMonthValid("1.0"),
             expectedResult = false
         )
         check(
-            name = "When month starts with leading 0 it should return null",
+            name = "When month starts with leading 0 it should return false",
             result = transactionReportActionValidator.isMonthValid("011"),
             expectedResult = false
         )
-//        check(
-//            name = "When month is not exist it should return null",
-//            result = transactionReportActionValidator.isMonthValid("12"),
-//            expectedResult = false
-//        )
 
         /** Valid test cases */
         check(

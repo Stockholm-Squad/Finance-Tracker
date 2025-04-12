@@ -143,7 +143,7 @@ class UpdateTransactionActionHandler : ActionHandler {
                 break
             }
 
-            println("Invalid category. Please enter a non-blank valid category.")
+            println("Invalid category. Please enter a value between 2 to 25.")
         }
 
         return updateCategoryOfTransaction(newCategory!!, selectedTransaction, financialTrackerStorage)

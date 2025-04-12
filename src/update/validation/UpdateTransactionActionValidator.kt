@@ -30,6 +30,7 @@ class UpdateTransactionActionValidator(): IUpdateTransactionActionValidator {
 
     override fun isValidateCategory(category: String): Boolean {
         return category.trim().isNotEmpty()
+                && category.length in 2..25
     }
 
     override fun isValidateType(type: String): Boolean {

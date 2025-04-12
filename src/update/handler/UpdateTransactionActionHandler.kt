@@ -12,9 +12,14 @@ class UpdateTransactionActionHandler : ActionHandler {
 
     override fun handleAction(financialTrackerStorage: IFinancialTrackerStorage) {
         while (true) {
-            val index = promptTransactionIndex(financialTrackerStorage) ?: continue
-            val selectedTransaction = financialTrackerStorage.getAllTransactions()?.get(index)
+            val index = promptTransactionIndex(financialTrackerStorage)
 
+            if (index == null) {
+                println("Returning to main menu.")
+                break
+            }
+
+            val selectedTransaction = financialTrackerStorage.getAllTransactions()?.get(index - 1)
             if (selectedTransaction == null) {
                 println("Transaction not found.")
                 continue
@@ -46,7 +51,7 @@ class UpdateTransactionActionHandler : ActionHandler {
 
                 println(
                     "----------------------------------------------------- \n" +
-                    "Do you want to update this transaction again? (y/n):"
+                            "Do you want to update this transaction again? (y/n):"
                 )
                 val continueChoice = readlnOrNull()?.trim()?.lowercase()
                 if (continueChoice != "y") {
@@ -54,7 +59,14 @@ class UpdateTransactionActionHandler : ActionHandler {
                     break
                 }
             }
-            break
+
+            // Optionally ask if user wants to update another transaction
+            println("Do you want to update another transaction? (y/n):")
+            val anotherChoice = readlnOrNull()?.trim()?.lowercase()
+            if (anotherChoice != "y") {
+                println("Returning to main menu.")
+                break
+            }
         }
     }
 

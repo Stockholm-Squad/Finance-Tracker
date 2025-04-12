@@ -20,7 +20,9 @@ class ViewTransactionActionValidator : IViewTransactionActionValidator {
     }
 
     override fun validateId(id: String?): Boolean {
-        return if (id != null) return true
+
+        return if (!id.isNullOrEmpty() && id[0] != '0')
+            return true
         else false
     }
 

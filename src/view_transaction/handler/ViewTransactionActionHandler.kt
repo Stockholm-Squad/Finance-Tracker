@@ -43,7 +43,8 @@ class ViewTransactionActionHandler : ActionHandler {
             }
 
 
-            val transaction = financialTrackerStorage.getTransactionById(choice.toInt()) ?: continue
+            val transaction =
+                financialTrackerStorage.getTransactionById(transactions[choice.toInt() - 1].id) ?: continue
             println("Transaction details is:")
             println("----------------------------------------------")
             println("Category / ${transaction.category}\nAmount / ${transaction.amount} EGP\nDate / 0${transaction.date.day}/${transaction.date.month}/${transaction.date?.year}\nType / ${transaction.type}\n")

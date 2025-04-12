@@ -25,7 +25,7 @@ class DeleteTransactionActionValidator : IDeleteTransactionActionValidator {
     }
 
     override fun deleteTransaction(financialTrackerStorage: IFinancialTrackerStorage, id: String?) : Boolean {
-        return financialTrackerStorage.deleteTransactionById(id!!.toInt())
+        return financialTrackerStorage.deleteTransactionById(id!!)
     }
 
 

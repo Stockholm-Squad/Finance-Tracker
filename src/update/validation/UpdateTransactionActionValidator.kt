@@ -1,18 +1,25 @@
 package src.update.validation
 
-import src.getAllTransaction
-import src.update.parseDate
+import src.model.Transaction
+import src.storage.MemoryFinancialTrackerStorage
 
-class UpdateTransactionActionValidator : IUpdateTransactionActionValidator {
+class UpdateTransactionActionValidator(): IUpdateTransactionActionValidator {
 
-    private val transactionsSize: Int = getAllTransaction()?.size ?: 0
+    private val memoryFinancialTrackerStorage: MemoryFinancialTrackerStorage = MemoryFinancialTrackerStorage()
 
-    override fun isValidateId(id: String): Boolean {
-        // still have point not cover need size of list transactions
-        val selectedId = id.trim()
-        return selectedId.all { it.isDigit() }
-                && selectedId.isNotEmpty()
-                && selectedId.toInt() in 1 .. transactionsSize
+    private val transactions: List<Transaction> = memoryFinancialTrackerStorage.getAllTransactions() ?: emptyList()
+
+    override fun isValidateIndex(index: String): Boolean {
+        val selectedIndex = index.trim()
+
+        if (transactions.isEmpty()) {
+            println("No transactions available.")
+            return false
+        }
+
+        return selectedIndex.all { it.isDigit() }
+                && selectedIndex.isNotEmpty()
+                && selectedIndex.toInt() in 1..transactions.size
     }
 
     override fun isValidOption(option: String): Boolean {
@@ -42,31 +49,20 @@ class UpdateTransactionActionValidator : IUpdateTransactionActionValidator {
                 && formattedAmount.toDouble() > 0
     }
 
-    // Validates the date string
-    override fun isValidateDate(date: String): Boolean {
-        try {
-            // Parse date string into day, month, year
-            val (day, month, year) = date.parseDate()
-
-            // Check if the day, month, and year are within valid ranges
-            if (day !in 1..31 || month !in 1..12 || year !in 1000..2100) return false
-
-            // Check number of days in the month (handling leap years for February)
-            val daysInMonth = when (month) {
-                4, 6, 9, 11 -> 30  // April, June, September, November
-                2 -> if (isLeapYear(year)) 29 else 28  // February
-                else -> 31  // All other months
-            }
-
-            return day <= daysInMonth
-        } catch (e: Exception) {
-            // Return false if parsing fails or any validation fails
-            return false
-        }
+    override fun isValidateDay(day: String): Boolean {
+        val newDay = day.trim()
+        return newDay.all { it.isDigit() }
+                && newDay.isNotEmpty()
+                && (newDay.length == 1 || newDay.length == 2)
+                && newDay.toInt() in 1 .. 31
     }
-    // Checks if the year is a leap year
-    private fun isLeapYear(year: Int): Boolean {
-        // Leap year check: divisible by 4 but not 100, unless divisible by 400
-        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
+
+    override fun isValidateMonth(month: String): Boolean {
+        val newMonth = month.trim()
+        return newMonth.all { it.isDigit() }
+                && newMonth.isNotEmpty()
+                && (newMonth.length == 1 || newMonth.length == 2)
+                && newMonth.toInt() in 1 .. 12
     }
+
 }

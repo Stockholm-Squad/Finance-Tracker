@@ -4,6 +4,57 @@ import src.model.Transaction
 
 import src.storage.MemoryFinancialTrackerStorage
 import src.view_transaction.validation.IViewTransactionActionValidator
+// <<<<<<< bug-fix/fix-add-implementation-for-update-transaction
+// import src.view_transaction.validation.ViewTransactionActionValidator
+
+// fun main() {
+//     //testCaseForDeleteTransaction()
+//     //testGetTransactionMonthlyReport()
+//     // start region for view transaction
+//     // get transaction by id
+//     AddTransactionTest().runTest()
+//     UpdateTransactionTest().runTest()
+
+
+//     check(
+//         name = "when user send valid id, return true",
+//         result = getTransactionById("2") != null,
+//         expectedResult = true
+//     )
+//     check(
+//         name = "when user send out of range id, return false",
+//         result = getTransactionById("100") != null,
+//         expectedResult = false
+//     )
+
+//     check(
+//         name = "when user send out of range and negative id, return false",
+//         result = getTransactionById("-1") != null,
+//         expectedResult = false
+//     )
+//     check(
+//         name = "when user send zero, return false",
+//         result = getTransactionById("0") != null,
+//         expectedResult = false
+//     )
+//     check(
+//         name = "when user send enter wrong input, return false",
+//         result = getTransactionById("a") != null,
+//         expectedResult = false
+//     )
+
+//     check(
+//         name = "when user send enter 0 before choice, return false",
+//         result = getTransactionById("01") != null,
+//         expectedResult = false
+//     )
+//     check(
+//         name = "when user send enter empty input, return false",
+//         result = getTransactionById("") != null,
+//         expectedResult = false
+//     )
+// =======
+// >>>>>>> develop
 
 
 fun main() {

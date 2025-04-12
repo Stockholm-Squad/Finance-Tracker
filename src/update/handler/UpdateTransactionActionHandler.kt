@@ -3,7 +3,6 @@ package update.handler
 import src.common.console.handler.ActionHandler
 import src.model.*
 import src.storage.IFinancialTrackerStorage
-import src.update.parseDate
 import src.update.validation.IUpdateTransactionActionValidator
 import src.update.validation.UpdateTransactionActionValidator
 
@@ -12,66 +11,112 @@ class UpdateTransactionActionHandler : ActionHandler {
     private val updateTransactionActionValidator: IUpdateTransactionActionValidator = UpdateTransactionActionValidator()
 
     override fun handleAction(financialTrackerStorage: IFinancialTrackerStorage) {
-
         while (true) {
-            val id = promptTransactionId() ?: continue
-            val selectedTransaction = financialTrackerStorage.getTransactionById(id)
+            val index = promptTransactionIndex(financialTrackerStorage)
 
+            if (index == null) {
+                println("Returning to main menu.")
+                break
+            }
+
+            val selectedTransaction = financialTrackerStorage.getAllTransactions()?.get(index - 1)
             if (selectedTransaction == null) {
                 println("Transaction not found.")
                 continue
             }
 
-            val choice = promptUpdateChoice() ?: continue
+            while (true) {
+                val choice = promptUpdateChoice() ?: continue
+                val updateType = TransactionUpdateOption.entries.find { it.option == choice }
 
-            val updateType = TransactionUpdateOption.entries.find { it.option == choice }
+                when (updateType) {
+                    TransactionUpdateOption.CATEGORY -> {
+                        promptTransactionCategory(selectedTransaction, financialTrackerStorage)
+                    }
 
-            when (updateType) {
-                TransactionUpdateOption.CATEGORY -> {
-                    promptTransactionCategory(selectedTransaction, financialTrackerStorage)
+                    TransactionUpdateOption.TYPE -> {
+                        promptUpdateTransactionType(selectedTransaction, financialTrackerStorage)
+                    }
+
+                    TransactionUpdateOption.AMOUNT -> {
+                        promptUpdateTransactionAmount(selectedTransaction, financialTrackerStorage)
+                    }
+
+                    TransactionUpdateOption.DATE -> {
+                        promptUpdateTransactionDate(selectedTransaction, financialTrackerStorage)
+                    }
+
+                    TransactionUpdateOption.EXIT -> {
+                        println("Exiting the update transaction")
+                        return
+                    }
+
+                    else -> println("Invalid choice.")
                 }
 
-                TransactionUpdateOption.TYPE -> {
-                    promptUpdateTransactionType(selectedTransaction, financialTrackerStorage)
-                }
-
-                TransactionUpdateOption.AMOUNT -> {
-                    promptUpdateTransactionAmount(selectedTransaction, financialTrackerStorage)
-                }
-
-                TransactionUpdateOption.DATE -> {
-                    promptUpdateTransactionDate(selectedTransaction, financialTrackerStorage)
-                }
-
-                TransactionUpdateOption.EXIT -> {
-                    println("Exiting the program.")
+                println(
+                    "----------------------------------------------------- \n" +
+                            "Do you want to update this transaction again? (y/n):"
+                )
+                val continueChoice = readlnOrNull()?.trim()?.lowercase()
+                if (continueChoice != "y") {
+                    println("Finish Update.")
                     break
                 }
+            }
 
-                else -> println("Invalid choice.")
+            // Optionally ask if user wants to update another transaction
+            println("Do you want to update another transaction? (y/n):")
+            val anotherChoice = readlnOrNull()?.trim()?.lowercase()
+            if (anotherChoice != "y") {
+                println("Returning to main menu.")
+                break
             }
         }
-        return
     }
 
-    private fun promptTransactionId(): Int? {
-        println("Please enter id of transaction")
-        val id = readlnOrNull()
-        if (id == null || !updateTransactionActionValidator.isValidateId(id)) {
-            println("Invalid input. Please enter a correct ID.")
+    private fun promptTransactionIndex(financialTrackerStorage: IFinancialTrackerStorage): Int? {
+        val transactions = financialTrackerStorage.getAllTransactions()
+
+        if (transactions.isNullOrEmpty()) {
+            println("No transactions found.")
             return null
         }
-        return id.toInt()
+
+        println("Here are the available transactions:")
+        transactions.forEachIndexed { index, transaction ->
+            println("${index + 1}. Category: ${transaction.category}, Type: ${transaction.type} Amount: ${transaction.amount}, Date: ${transaction.date}")
+        }
+
+        while (true) {
+            println("Please enter the index of the transaction (1 to ${transactions.size}):")
+            val input = readlnOrNull()
+
+            if (input == null || !updateTransactionActionValidator.isValidateIndex(input)) {
+                println("Invalid input. Please enter a valid index.")
+                continue
+            }
+
+            val selectedIndex = input.toInt()
+            if (selectedIndex !in 1..transactions.size) {
+                println("Invalid input. Please enter a valid index between 1 and ${transactions.size}.")
+                continue
+            }
+
+            return selectedIndex
+        }
     }
 
     private fun promptUpdateChoice(): Int? {
         println(
-            "Please choose number of what do you need to update\n" +
+            "------------------------------------------------------ \n" +
+                    "Please choose number of what do you need to update\n" +
                     "1. Category \n" +
                     "2. Type (Income - Expenses)\n" +
                     "3. Amount \n" +
                     "4. Date \n" +
-                    "5. Exit"
+                    "5. Exit \n" +
+                    "-----------------------------------------------------"
         )
         val choice = readlnOrNull()
         if (choice == null || !updateTransactionActionValidator.isValidOption(choice)) {
@@ -85,16 +130,25 @@ class UpdateTransactionActionHandler : ActionHandler {
         selectedTransaction: Transaction,
         financialTrackerStorage: IFinancialTrackerStorage
     ): Boolean {
-        println("Please input new Category:")
-        val newCategory = readlnOrNull()
+        var newCategory: String?
 
-        if (newCategory.isNullOrBlank() || !updateTransactionActionValidator.isValidateCategory(newCategory)) {
-            println("Invalid category. It cannot be blank.")
-            return false
+        while (true) {
+            println(
+                "----------------------------------------------------- \n" +
+                        "Please input new Category:"
+            )
+            newCategory = readlnOrNull()
+
+            if (!newCategory.isNullOrBlank() && updateTransactionActionValidator.isValidateCategory(newCategory)) {
+                break
+            }
+
+            println("Invalid category. Please enter a non-blank valid category.")
         }
 
-        return updateCategoryOfTransaction(newCategory, selectedTransaction, financialTrackerStorage)
+        return updateCategoryOfTransaction(newCategory!!, selectedTransaction, financialTrackerStorage)
     }
+
 
     private fun updateCategoryOfTransaction(
         newCategory: String,
@@ -117,20 +171,29 @@ class UpdateTransactionActionHandler : ActionHandler {
         selectedTransaction: Transaction,
         financialTrackerStorage: IFinancialTrackerStorage
     ): Boolean {
-        println(
-            "Please choose number of what do you need \n" +
-                    "1. Income \n" +
-                    "2. Expenses \n" +
-                    "----------------------------------------"
-        )
-        val type = readlnOrNull()
-        if (type == null || !updateTransactionActionValidator.isValidateType(type)) {
-            println("Invalid type. Must choose (1. Income or 2. Expenses).")
-            return false
+        var type: String?
+
+        while (true) {
+            println(
+                "----------------------------------------------------- \n" +
+                        "Please choose number of what do you need \n" +
+                        "1. Income \n" +
+                        "2. Expenses \n" +
+                        "----------------------------------------"
+            )
+
+            type = readlnOrNull()
+
+            if (type != null && (type == "1" || type == "2")) {
+                break
+            }
+
+            println("Invalid input. Please enter 1 for Income or 2 for Expenses.")
         }
 
-        return updateTypeOfTransaction(type, selectedTransaction, financialTrackerStorage)
+        return updateTypeOfTransaction(type.toString(), selectedTransaction, financialTrackerStorage)
     }
+
 
     private fun updateTypeOfTransaction(
         newType: String,
@@ -139,8 +202,8 @@ class UpdateTransactionActionHandler : ActionHandler {
     ): Boolean {
 
         val updatedTransaction = when (newType) {
-            "1"-> selectedTransaction.copy(type = TransactionType.INCOME)
-            "2"-> selectedTransaction.copy(type = TransactionType.EXPANSES)
+            "1" -> selectedTransaction.copy(type = TransactionType.INCOME)
+            "2" -> selectedTransaction.copy(type = TransactionType.EXPANSES)
             else -> {
                 println("Invalid type. Failed to update the Type.")
                 return false
@@ -160,15 +223,31 @@ class UpdateTransactionActionHandler : ActionHandler {
         selectedTransaction: Transaction,
         financialTrackerStorage: IFinancialTrackerStorage
     ): Boolean {
-        println("Please enter new Amount:")
-        val newAmount = readlnOrNull()
+        var newAmount: String?
 
-        if (newAmount == null || !updateTransactionActionValidator.isValidateAmount(newAmount)) {
-            println("Invalid amount. Must be a positive number.")
+        while (true) {
+            println(
+                "----------------------------------------------------- \n" +
+                        "Please enter new Amount:"
+            )
+            newAmount = readlnOrNull()
+
+            if (newAmount != null && updateTransactionActionValidator.isValidateAmount(newAmount)) {
+                break
+            }
+
+            println("Invalid amount. Please enter a valid positive number.")
+        }
+
+        val amount = newAmount?.toDoubleOrNull()
+        if (amount == null) {
+            println("Failed to convert the entered amount to a valid number.")
             return false
         }
-        return updateTransactionAmount(newAmount.toDouble(), selectedTransaction, financialTrackerStorage)
+
+        return updateTransactionAmount(amount, selectedTransaction, financialTrackerStorage)
     }
+
 
     private fun updateTransactionAmount(
         newAmount: Double,
@@ -190,16 +269,16 @@ class UpdateTransactionActionHandler : ActionHandler {
         selectedTransaction: Transaction,
         financialTrackerStorage: IFinancialTrackerStorage
     ): Boolean {
-        println("Please enter new Date (ex: 1/04/2025):")
-        val dateInput = readlnOrNull()
 
-        if (dateInput.isNullOrEmpty() || !updateTransactionActionValidator.isValidateDate(dateInput)) {
-            println("Invalid date format.")
-            return false
-        }
+        val newDay = promptUpdateTransactionDay() ?: return false
+        val newMonth = promptUpdateTransactionMonth() ?: return false
+        val year = selectedTransaction.date.year
 
-        val (day, month, year) = dateInput.parseDate()
-        val transactionDate = TransactionDate(day, TransactionMonth.entries[month - 1], year)
+        val transactionDate = TransactionDate(
+            day = newDay,
+            month = TransactionMonth.entries[newMonth - 1],
+            year = year
+        )
 
         return updateTransactionDate(transactionDate, selectedTransaction, financialTrackerStorage)
     }
@@ -217,7 +296,49 @@ class UpdateTransactionActionHandler : ActionHandler {
         } else {
             println("Failed to update the date.")
         }
+
         return success
+    }
+
+
+    private fun promptUpdateTransactionDay(): Int? {
+        var isValid = false
+        var day: Int? = null
+        while (!isValid) {
+            println(
+                "----------------------------------------------------- \n" +
+                        "Please enter day:"
+            )
+            val input = readlnOrNull()
+
+            if (input != null && updateTransactionActionValidator.isValidateDay(input)) {
+                day = input.toInt()
+                isValid = true
+            } else {
+                println("Invalid day value. Day must be between 1 and 31.")
+            }
+        }
+        return day
+    }
+
+    private fun promptUpdateTransactionMonth(): Int? {
+        var isValid = false
+        var month: Int? = null
+        while (!isValid) {
+            println(
+                "----------------------------------------------------- \n" +
+                        "Please enter month:"
+            )
+            val input = readlnOrNull()
+
+            if (input != null && updateTransactionActionValidator.isValidateMonth(input)) {
+                month = input.toInt()
+                isValid = true
+            } else {
+                println("Invalid month value. Month must be between 1 and 12.")
+            }
+        }
+        return month
     }
 
 }

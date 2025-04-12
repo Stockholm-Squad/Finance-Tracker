@@ -2,7 +2,7 @@ package src.update.validation
 
 
 interface IUpdateTransactionActionValidator {
-    fun isValidateId(id: String, ): Boolean
+    fun isValidateIndex(id: String ): Boolean
 
     fun isValidOption(option: String): Boolean
 
@@ -12,5 +12,7 @@ interface IUpdateTransactionActionValidator {
 
     fun isValidateAmount(amount: String): Boolean
 
-    fun isValidateDate(date: String): Boolean
+    fun isValidateDay(day:String):Boolean
+
+    fun isValidateMonth(month:String):Boolean
 }

@@ -31,7 +31,7 @@ class TransactionReportActionHandler(
         val transactionList: List<Transaction>? =
             transactionReportDataHandler.getMonthlyReport(month, financialTrackerStorage)
 
-        if (transactionList == null) {
+        if (transactionList.isNullOrEmpty()) {
             println("No Transaction found!")
             return
         }

@@ -32,7 +32,7 @@ class DeleteTransactionActionHandler(private val validator : IDeleteTransactionA
                 }
             } else {
                 println("Invalid input or not found ⚠️")
-                continue
+                break
             }
         }
     }

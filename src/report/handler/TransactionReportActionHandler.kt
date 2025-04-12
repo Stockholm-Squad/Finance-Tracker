@@ -27,7 +27,7 @@ class TransactionReportActionHandler(
 
         val isValidMonth = transactionReportActionValidator.isMonthValid(month)
         if (!isValidMonth) {
-            println("Invalid Month!")
+            println("Oops! Invalid Month! 😕 Please enter a month between 1 and 12.")
             return
         }
 
@@ -35,7 +35,7 @@ class TransactionReportActionHandler(
             transactionReportDataHandler.getMonthlyReport(month, financialTrackerStorage)
 
         if (transactionList.isNullOrEmpty()) {
-            println("No Transaction found!")
+            println("Oops! No transaction found. 😕 Please check and try again.")
             return
         }
 

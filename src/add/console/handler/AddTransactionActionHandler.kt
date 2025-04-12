@@ -18,7 +18,7 @@ class AddTransactionActionHandler : ActionHandler {
 
     // object
     override fun handleAction(financialTrackerStorage: IFinancialTrackerStorage) {
-        println("------------------------------------Add Transaction---------------------------------")
+        println("-------------------------- Add Transaction 📝 --------------------------")
         val amount = handleAmount()
         val id = UUID.randomUUID()
         val day = handleDay()
@@ -35,14 +35,14 @@ class AddTransactionActionHandler : ActionHandler {
             10 -> TransactionMonth.OCTOBER
             11 -> TransactionMonth.NOVEMBER
             12 -> TransactionMonth.DECEMBER
-            else -> throw IllegalArgumentException("Invalid month number")
+            else -> throw IllegalArgumentException("Oops! Invalid month number. 😕 Please enter a valid month.")
         }
         val year = Calendar.getInstance().get(Calendar.YEAR)
 
         val type = when (handleType()) {
             1 -> TransactionType.INCOME
             2 -> TransactionType.EXPANSES
-            else -> throw IllegalArgumentException("Invalid type")
+            else -> throw IllegalArgumentException("Oops! Invalid type. 😕 Please check your input.")
         }
         val category = handleCategory()
         val date = TransactionDate(day = day, month = month, year = year)
@@ -57,46 +57,53 @@ class AddTransactionActionHandler : ActionHandler {
             )
         ) {
             val lastTransaction = financialTrackerStorage.getTransactionById(id.toString())
+
             println(
-                "Transaction Amount is:  ${lastTransaction?.amount}\n" +
-                        "Transaction Date is: ${lastTransaction?.date?.day}-${lastTransaction?.date?.month}-${lastTransaction?.date?.year}\n" +
-                        "Transaction Type is: ${lastTransaction?.type}\n" +
-                        "Transaction Category: ${lastTransaction?.category}"
+                "Category: ${lastTransaction?.category}, " +
+                        "Type: ${lastTransaction?.type}, " +
+                        "Amount: ${lastTransaction?.amount}, " +
+                        "Date: ${lastTransaction?.date}"
             )
         }
     }
 
     private fun handleAmount(): Double {
         while (true) {
-            println("Please Enter the amount of the transaction")
-            println("Transaction should be a number")
+            println(
+                "------------------------------------------------------------------------ \n" +
+                        "Please enter the amount of the transaction. It should be a valid number. 💸"
+            )
+
             val amount = readln()
             if (validator.validateAmount(amount)) {
                 return amount.toDouble()
             } else {
-                println("Invalid input")
+                println("Oops! The amount is not valid. 😕 Please enter a valid number.")
             }
         }
     }
 
     private fun handleDay(): Int {
         while (true) {
-            println("Please Enter the day of the transaction")
-            println("Day should be a number")
+            println(
+                "------------------------------------------------------------------------ \n" +
+                        "Please enter the day of the transaction. It should be a valid number. 📅"
+            )
             val day = readln().trim()
             if (validator.validateDay(day)) {
                 return day.toInt()
             } else {
-                println("Invalid input")
+                println("Oops! The day must be between 1 and 31. 😕 Please try again.")
             }
         }
     }
 
     private fun handleMonth(): Int {
         while (true) {
-            println("Please enter the month number of the transaction")
             println(
-                "1- January\n" +
+                "------------------------------------------------------------------------ \n" +
+                        "Please enter the month number of the transaction. 📅" +
+                        "1- January\n" +
                         "2- February\n" +
                         "3- March\n" +
                         "4- April\n" +
@@ -113,7 +120,7 @@ class AddTransactionActionHandler : ActionHandler {
             if (validator.validateMonth(month)) {
                 return month.toInt()
             } else {
-                println("Invalid input")
+                println("Oops! The month must be between 1 and 12. 😕 Please try again.")
             }
         }
     }
@@ -121,29 +128,32 @@ class AddTransactionActionHandler : ActionHandler {
 
     private fun handleType(): Int {
         while (true) {
-            println("Please Enter the type of the transaction")
             println(
-                "1- Income\n" +
-                        "2- Expanse"
+                "------------------------------------------------------------------------ \n" +
+                        "Please enter the type of the transaction:\n1- Income 💰\n2- Expense 💸" +
+                        "------------------------------------------------------------------------ "
             )
             val type = readln().trim()
             if (validator.validateType(type)) {
                 return type.toInt()
 
             } else {
-                println("Invalid input")
+                println("Oops! Invalid input. 😕 Please enter 1 for Income 💰 or 2 for Expense 💸.")
             }
         }
     }
 
     private fun handleCategory(): String {
         while (true) {
-            println("Please Enter the Category of the transaction")
+            println(
+                "------------------------------------------------------------------------ \n" +
+                        "Please enter the category of the transaction ✍: "
+            )
             val category = readln().trim()
             if (validator.validateCategory(category)) {
                 return category
             } else {
-                println("Invalid input")
+                println("Category not acceptable. Please enter a value between 2 to 25 ❌")
             }
         }
     }

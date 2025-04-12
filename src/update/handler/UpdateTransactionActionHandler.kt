@@ -177,9 +177,7 @@ class UpdateTransactionActionHandler : ActionHandler {
         while (true) {
             println(
                 "------------------------------------------------------------------------ \n" +
-                        "Please choose number of what do you need \n" +
-                        "1. Income \n" +
-                        "2. Expenses \n" +
+                        "Please enter the type of the transaction:\n1- Income 💰\n2- Expense 💸" +
                         "------------------------------------------------------------------------ "
             )
 

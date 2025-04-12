@@ -51,8 +51,8 @@ class ViewTransactionActionHandler : ActionHandler {
             println("Category / ${transaction.category}\nAmount / ${transaction.amount} EGP\nDate / 0${transaction.date.day}/${transaction.date.month}/${transaction.date?.year}\nType / ${transaction.type}\n")
 
             println("\nWould you like to view more transactions? (y/n)")
-            val breakOrContinueChoice = readlnOrNull()
-            if (breakOrContinueChoice == "n")
+            val breakOrContinueChoice = readlnOrNull()?.trim()?.lowercase()
+            if (breakOrContinueChoice != "y")
                 return
         }
     }

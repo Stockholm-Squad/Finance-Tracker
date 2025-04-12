@@ -26,6 +26,7 @@ class ViewTransactionActionHandler : ActionHandler {
 
 
             when {
+                choice == "q" -> return
                 !viewTransactionActionValidator.validateId(choice) -> {
                     println("You didn't choose 😢..Try Again")
                     continue

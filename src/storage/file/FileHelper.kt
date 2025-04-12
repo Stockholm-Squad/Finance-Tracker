@@ -10,18 +10,23 @@ class FileHelper(fileName: String) : IFileHelper {
 
     override fun loadTransactions(): MutableList<Transaction>? {
         if (!file.exists()) {
-            println("File not exist")
             return null
         }
+
+        if (file.length() == 0L) {
+            return mutableListOf()
+        }
+
         return try {
             ObjectInputStream(file.inputStream()).use {
-                it.readObject() as MutableList<Transaction>?
+                it.readObject() as? MutableList<Transaction>
             }
         } catch (throwable: Throwable) {
-            println(throwable)
+            println("Error reading file: $throwable")
             null
         }
     }
+
 
     override fun saveTransactions(allTransactions: List<Transaction>?) {
         if (allTransactions == null) return

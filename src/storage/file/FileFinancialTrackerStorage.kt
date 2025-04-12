@@ -13,6 +13,7 @@ class FileFinancialTrackerStorage(
 
     init {
         allTransaction = fileHelper.loadTransactions()
+
     }
 
     override fun addTransaction(transaction: Transaction): Boolean {

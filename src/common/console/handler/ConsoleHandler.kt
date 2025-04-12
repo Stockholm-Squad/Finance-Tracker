@@ -16,7 +16,7 @@ import update.handler.UpdateTransactionActionHandler
 
 class ConsoleHandler {
     private val financialTrackerStorage: IFinancialTrackerStorage = FileFinancialTrackerStorage(
-        FileHelper("out/financialTracker.txt")
+        FileHelper("src/financialTracker.txt")
     )
     private val helper = DisplayTransactions(financialTrackerStorage.getAllTransactions()!!)
     fun welcomeMessage() {

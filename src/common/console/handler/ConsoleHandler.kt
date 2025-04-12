@@ -9,11 +9,15 @@ import src.report.handler.TransactionReportDataHandler
 import src.report.validation.TransactionReportActionValidator
 import src.storage.IFinancialTrackerStorage
 import src.storage.MemoryFinancialTrackerStorage
+import src.test.storage.file.FileFinancialTrackerStorage
+import src.test.storage.file.FileHelper
 import src.view_transaction.handler.ViewTransactionActionHandler
 import update.handler.UpdateTransactionActionHandler
 
 class ConsoleHandler {
-    private val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
+    private val financialTrackerStorage: IFinancialTrackerStorage = FileFinancialTrackerStorage(
+        FileHelper("out/financialTracker.txt")
+    )
     private val helper = DisplayTransactions(financialTrackerStorage.getAllTransactions()!!)
     fun welcomeMessage() {
         while (true) {

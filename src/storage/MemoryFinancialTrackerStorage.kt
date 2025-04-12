@@ -8,38 +8,7 @@ import src.storage.IFinancialTrackerStorage
 
 class MemoryFinancialTrackerStorage : IFinancialTrackerStorage {
     companion object {
-        private var allTransaction: MutableList<Transaction> = mutableListOf(Transaction(
-            id = "1",
-            amount = 1000.0,
-            date = TransactionDate(1, TransactionMonth.FEBRUARY,2023),
-            category = "Food",
-            type = TransactionType.EXPANSES
-        ),Transaction(
-            id = "1",
-            amount = 1000.0,
-            date = TransactionDate(1, TransactionMonth.FEBRUARY,2023),
-            category = "Food",
-            type = TransactionType.EXPANSES
-        ),Transaction(
-            id = "2",
-            amount = 1000.0,
-            date = TransactionDate(1, TransactionMonth.JANUARY,2023),
-            category = "Food",
-            type = TransactionType.EXPANSES
-        ),Transaction(
-            id = "3",
-            amount = 1000.0,
-            date = TransactionDate(1, TransactionMonth.JANUARY,2023),
-            category = "Food",
-            type = TransactionType.EXPANSES
-        ),
-                (Transaction(
-            id = " 4 ",
-            amount = 1000.0,
-            date = TransactionDate(1, TransactionMonth.JANUARY,2023),
-            category = "Food",
-            type = TransactionType.EXPANSES
-        )))
+        private var allTransaction: MutableList<Transaction> = mutableListOf()
     }
     override fun addTransaction(transaction: Transaction): Boolean {
         allTransaction.add(transaction)

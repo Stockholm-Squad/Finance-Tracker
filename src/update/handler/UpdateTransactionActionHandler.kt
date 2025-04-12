@@ -33,19 +33,24 @@ class UpdateTransactionActionHandler : ActionHandler {
                     TransactionUpdateOption.CATEGORY -> {
                         promptTransactionCategory(selectedTransaction, financialTrackerStorage)
                     }
+
                     TransactionUpdateOption.TYPE -> {
                         promptUpdateTransactionType(selectedTransaction, financialTrackerStorage)
                     }
+
                     TransactionUpdateOption.AMOUNT -> {
                         promptUpdateTransactionAmount(selectedTransaction, financialTrackerStorage)
                     }
+
                     TransactionUpdateOption.DATE -> {
                         promptUpdateTransactionDate(selectedTransaction, financialTrackerStorage)
                     }
+
                     TransactionUpdateOption.EXIT -> {
-                        println("Exiting the program.")
+                        println("Exiting the update transaction")
                         return
                     }
+
                     else -> println("Invalid choice.")
                 }
 
@@ -98,7 +103,7 @@ class UpdateTransactionActionHandler : ActionHandler {
             return null
         }
 
-        return selectedIndex - 1 // Convert to zero-based index
+        return selectedIndex
     }
 
     private fun promptUpdateChoice(): Int? {

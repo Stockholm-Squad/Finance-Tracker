@@ -20,18 +20,18 @@ class DeleteTransactionActionHandler(private val validator : IDeleteTransactionA
             if(validator.checkTransactionIndex(allTransactions!!.toList() , id)){
                 if(validator.checkConfirmation()){
                     if(validator.deleteTransaction(financialTrackerStorage , id)){
-                        println("Transaction deleted successfully.")
+                        println("Transaction deleted successfully ✅")
                         break
                     } else {
-                        println("error deleting transaction.")
+                        println("Error deleting transaction ❌")
                         continue
                     }
                 } else {
-                    println("Action cancelled.")
+                    println("Action cancelled 🛑")
                     break
                 }
             } else {
-                println("Invalid input or not found.")
+                println("Invalid input or not found ⚠️")
                 continue
             }
         }

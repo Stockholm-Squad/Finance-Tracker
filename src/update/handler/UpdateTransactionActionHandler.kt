@@ -55,8 +55,8 @@ class UpdateTransactionActionHandler : ActionHandler {
                 }
 
                 println(
-                    "----------------------------------------------------- \n" +
-                            "Do you want to update this transaction again? (y/n):"
+                    "------------------------------------------------------------------------ \n" +
+                            "Do you want to update this transaction again? (y/n): ❓"
                 )
                 val continueChoice = readlnOrNull()?.trim()?.lowercase()
                 if (continueChoice != "y") {
@@ -64,9 +64,10 @@ class UpdateTransactionActionHandler : ActionHandler {
                     break
                 }
             }
-
-            // Optionally ask if user wants to update another transaction
-            println("Do you want to update another transaction? (y/n):")
+            println(
+                "------------------------------------------------------------------------ \n" +
+                        "Do you want to update another transaction? (y/n): ❓"
+            )
             val anotherChoice = readlnOrNull()?.trim()?.lowercase()
             if (anotherChoice != "y") {
                 println("Returning to main menu.")
@@ -109,14 +110,14 @@ class UpdateTransactionActionHandler : ActionHandler {
 
     private fun promptUpdateChoice(): Int? {
         println(
-            "------------------------------------------------------ \n" +
+            "------------------------------------------------------------------------ \n" +
                     "Please choose number of what do you need to update\n" +
                     "1. Category \n" +
                     "2. Type (Income - Expenses)\n" +
                     "3. Amount \n" +
                     "4. Date \n" +
                     "5. Exit \n" +
-                    "-----------------------------------------------------"
+                    "------------------------------------------------------------------------ "
         )
         val choice = readlnOrNull()
         if (choice == null || !updateTransactionActionValidator.isValidOption(choice)) {
@@ -134,7 +135,7 @@ class UpdateTransactionActionHandler : ActionHandler {
 
         while (true) {
             println(
-                "----------------------------------------------------- \n" +
+                "------------------------------------------------------------------------ \n" +
                         "Please input new Category:"
             )
             newCategory = readlnOrNull()
@@ -175,11 +176,11 @@ class UpdateTransactionActionHandler : ActionHandler {
 
         while (true) {
             println(
-                "----------------------------------------------------- \n" +
+                "------------------------------------------------------------------------ \n" +
                         "Please choose number of what do you need \n" +
                         "1. Income \n" +
                         "2. Expenses \n" +
-                        "----------------------------------------"
+                        "------------------------------------------------------------------------ "
             )
 
             type = readlnOrNull()
@@ -227,7 +228,7 @@ class UpdateTransactionActionHandler : ActionHandler {
 
         while (true) {
             println(
-                "----------------------------------------------------- \n" +
+                "------------------------------------------------------------------------ \n" +
                         "Please enter new Amount:"
             )
             newAmount = readlnOrNull()
@@ -306,7 +307,7 @@ class UpdateTransactionActionHandler : ActionHandler {
         var day: Int? = null
         while (!isValid) {
             println(
-                "----------------------------------------------------- \n" +
+                "------------------------------------------------------------------------ \n" +
                         "Please enter day:"
             )
             val input = readlnOrNull()
@@ -326,7 +327,7 @@ class UpdateTransactionActionHandler : ActionHandler {
         var month: Int? = null
         while (!isValid) {
             println(
-                "----------------------------------------------------- \n" +
+                "------------------------------------------------------------------------ \n" +
                         "Please enter month:"
             )
             val input = readlnOrNull()

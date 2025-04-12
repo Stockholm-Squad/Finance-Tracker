@@ -14,7 +14,7 @@ class DeleteTransactionTest : TransactionTest() {
             val validator : IDeleteTransactionActionValidator = DeleteTransactionActionValidator()
             return validator.checkTransactionIndex(transactions , id)
         }
-        println("\n<-----------------Delete Transactions Test-------------------->")
+        println("<------------------------ Delete Transactions Test ---------------------------->")
 
         check(
             name = "delete transaction but have no transaction(first time that run app) it should return false",
@@ -81,7 +81,7 @@ class DeleteTransactionTest : TransactionTest() {
             expectedResult = false
         )
 
-        println("<------------------------End of Delete Transaction Test---------------------------->")
+        println("<------------------------ End of Delete Transactions Test ---------------------------->")
         // endregion
     }
 

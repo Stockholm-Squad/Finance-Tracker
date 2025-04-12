@@ -18,7 +18,8 @@ class MonthlyReportTest : TransactionTest() {
         val transactionReportActionValidator: ITransactionReportActionValidator = TransactionReportActionValidator()
         val transactionReportDataHandler: ITransactionReportDataHandler = TransactionReportDataHandler()
         val financialTrackerStorage: IFinancialTrackerStorage = MemoryFinancialTrackerStorage()
-        println("\n<-----------------Monthly Report Test-------------------->")
+        println("<------------------------ Monthly Report Test ---------------------------->")
+
         check(
             name = "When month < 1 it should return null",
             result = transactionReportActionValidator.isMonthValid("-13"),
@@ -87,6 +88,6 @@ class MonthlyReportTest : TransactionTest() {
             result = transactionReportDataHandler.getMonthlyReport("١", financialTrackerStorage)?.isNotEmpty() == true,
             expectedResult = true
         )
-        println("<------------------------End of Monthly Report Test---------------------------->")
+        println("<------------------------ End of Monthly Report Test ---------------------------->")
     }
 }

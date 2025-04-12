@@ -17,8 +17,10 @@ class DeleteTransactionActionValidator : IDeleteTransactionActionValidator {
     override fun checkTransactionIndex(allTransaction: List<Transaction>, selectedIndex : String?): Boolean {
         return selectedIndex?.let { index ->
             index.toIntOrNull()?.let {
+                if ("-" in index || index.toInt()==0){return false}
                 if (index.toInt() - 1 >= allTransaction.size) {return false}
                 val transactionId = allTransaction[index.toInt() - 1].id
+
                 it >= 0 && allTransaction.any { it.id == transactionId }
             }
         } ?: false

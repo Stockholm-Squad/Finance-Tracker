@@ -21,6 +21,7 @@ class TransactionReportActionHandler(
         )
         val month = readlnOrNull()
 
+
         val isValidMonth = transactionReportActionValidator.isMonthValid(month)
         if (!isValidMonth) {
             println("Invalid Month!")

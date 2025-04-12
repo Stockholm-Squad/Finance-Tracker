@@ -15,7 +15,8 @@ class DeleteTransactionActionHandler(private val validator : IDeleteTransactionA
 
         println("Enter the transaction to delete:")
         while(true){
-            val id = readlnOrNull()
+            val input = readlnOrNull()
+            val id = input?.trim()
             if(validator.checkTransactionIndex(allTransactions!!.toList() , id)){
                 if(validator.checkConfirmation()){
                     if(validator.deleteTransaction(financialTrackerStorage , id)){

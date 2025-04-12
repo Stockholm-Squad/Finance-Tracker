@@ -1,5 +1,4 @@
-package src
-
+package src.test
 import src.delete.validation.DeleteTransactionActionValidator
 import src.delete.validation.IDeleteTransactionActionValidator
 import src.model.Transaction
@@ -15,8 +14,9 @@ class DeleteTransactionTest : TransactionTest() {
             val validator : IDeleteTransactionActionValidator = DeleteTransactionActionValidator()
             return validator.checkTransactionIndex(transactions , id)
         }
+        println("\n<-----------------Delete Transactions Test-------------------->")
 
-        src.check(
+        check(
             name = "delete transaction but have no transaction(first time that run app) it should return false",
             result = deleteTransactionById("1"),
             expectedResult = false
@@ -34,44 +34,57 @@ class DeleteTransactionTest : TransactionTest() {
 
 
 
-        src.check(
+        check(
             name = "delete existing transaction (ex:index = 1) is should return true ",
             result = deleteTransactionById("1"),
             expectedResult = true
         )
 
 
-        src.check(
+        check(
             name = "invalid delete non-existing transaction id = 999 it should return false",
             result = deleteTransactionById("999"),
             expectedResult = false
         )
 
-        src.check(
+        check(
             name = "invalid delete transaction with negative ID id = -1 it should return false",
             result = deleteTransactionById("-1"),
             expectedResult = false
         )
 
-        src.check(
+        check(
             name = "invalid delete transaction with id 0 it should return false",
             result = deleteTransactionById("0"),
             expectedResult = false
         )
 
-        src.check(
+        check(
             name = "enter invalid id ex:user input = 1a it should return false",
             result = deleteTransactionById("1a"),
             expectedResult = false
         )
 
-        src.check(
+        check(
             name = "enter invalid id ex:user input = 5 but 5 not exist it should return false",
             result = deleteTransactionById("5"),
             expectedResult = false
         )
+        check(
+            name = "when user enter letter it should return false",
+            result = deleteTransactionById("abcABC"),
+            expectedResult = false
+        )
+        check(
+            name = "when user enter special Char it should return false",
+            result = deleteTransactionById("1@"),
+            expectedResult = false
+        )
+
+        println("<------------------------End of Delete Transaction Test---------------------------->")
         // endregion
     }
+
 
 
 }

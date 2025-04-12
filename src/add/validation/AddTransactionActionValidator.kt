@@ -49,7 +49,7 @@ class AddTransactionActionValidator : IAddTransactionActionValidator {
         when {
             category.isBlank() -> return false
 
-            category.length < 2 -> return false
+            category.length < 3 -> return false
 
             category.length > 25 -> return false
         }

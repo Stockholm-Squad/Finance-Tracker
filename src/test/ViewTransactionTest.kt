@@ -1,15 +1,36 @@
-package src.view_transaction
-
-import src.TransactionTest
+package src.test
 
 import src.model.Transaction
+import src.model.TransactionDate
+import src.model.TransactionMonth
+import src.model.TransactionType
+import src.storage.IFinancialTrackerStorage
 import src.storage.MemoryFinancialTrackerStorage
 import src.view_transaction.validation.IViewTransactionActionValidator
 import src.view_transaction.validation.ViewTransactionActionValidator
 
 class ViewTransactionTest : TransactionTest() {
+//    fun dummy(financialTrackerStorage: IFinancialTrackerStorage){
+//        financialTrackerStorage.addTransaction(Transaction(
+//            id = "1",
+//            amount = 1000.0,
+//            date = TransactionDate(1, TransactionMonth.APRIL,2023),
+//            category = "Food",
+//            type = TransactionType.EXPANSES
+//        ))
+//        financialTrackerStorage.addTransaction(Transaction(
+//            id = " 12 ",
+//            amount = 1000.0,
+//            date = TransactionDate(1, TransactionMonth.APRIL,2023),
+//            category = "Food",
+//            type = TransactionType.EXPANSES
+//        ))
+//    }
+
     override fun runTest() {
-        println("<------------------------View Transaction Test ----------------------------------->")
+//        dummy(MemoryFinancialTrackerStorage())
+//        MemoryFinancialTrackerStorage.Companion()
+        println("<------------------------View Transaction Test----------------------------------->")
         // start region for view transaction
         // get transaction by id
 
@@ -62,12 +83,12 @@ class ViewTransactionTest : TransactionTest() {
             expectedResult = true
         )
         check(
-            name = "when list in init but has no data, return true", result = listSize == 0, expectedResult = true
+            name = "when list in init but has no data, return false", result = listSize == 0, expectedResult = false
         )
 
 
         // end region for view transaction
-        println("<------------------------End of view Transaction Test ---------------------------->")
+        println("<------------------------End of view Transaction Test---------------------------->")
 
     }
 

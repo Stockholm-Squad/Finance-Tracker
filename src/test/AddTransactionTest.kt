@@ -1,4 +1,4 @@
-package src
+package src.test
 
 import src.add.validation.AddTransactionActionValidator
 
@@ -7,8 +7,8 @@ class AddTransactionTest : TransactionTest() {
     override fun runTest() {
         /**
          * Checkers for amount parameter*/
-        println("<------------------------Add Transaction Test ---------------------------->")
-        println("<------------------------Checkers for amount parameter ---------------------------->")
+        println("<------------------------Add Transaction Test---------------------------->")
+        println("<------------------------Checkers for amount parameter---------------------------->")
         check(
             "when amount is less than 0 then return false",
             addTransaction(amount = "-1", day = "2", month = "2", type = "1", category = "food"),
@@ -69,7 +69,7 @@ class AddTransactionTest : TransactionTest() {
         )
         check(
             "when day contains leading zeros then return false",
-            addTransaction(amount = "03", day = "23", month = "2", type = "1", category = "food"),
+            addTransaction(amount = "3", day = "03", month = "2", type = "1", category = "food"),
             false
         )
         check(
@@ -179,18 +179,23 @@ class AddTransactionTest : TransactionTest() {
 
     private fun addTransaction(amount: String, day: String, month: String, type: String, category: String): Boolean {
         if (!AddTransactionActionValidator().validateDay(day)) {
+//            println("day is not valid")
             return false
         }
-        if (!AddTransactionActionValidator().validateMonth(amount)) {
+        if (!AddTransactionActionValidator().validateAmount(amount)) {
+//            println("amount is not valid")
             return false
         }
         if (!AddTransactionActionValidator().validateMonth(month)) {
+//            println("month is not valid")
             return false
         }
         if (!AddTransactionActionValidator().validateType(type)) {
+//            println("type is not valid")
             return false
         }
         if (!AddTransactionActionValidator().validateCategory(category)) {
+//            println("category is not valid")
             return false
         }
         return true

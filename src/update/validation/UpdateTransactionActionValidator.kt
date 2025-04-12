@@ -11,12 +11,10 @@ class UpdateTransactionActionValidator(): IUpdateTransactionActionValidator {
 
     override fun isValidateIndex(index: String): Boolean {
         val selectedIndex = index.trim()
-
         if (transactions.isEmpty()) {
             println("No transactions available.")
             return false
         }
-
         return selectedIndex.all { it.isDigit() }
                 && selectedIndex.isNotEmpty()
                 && selectedIndex.toInt() in 1..transactions.size

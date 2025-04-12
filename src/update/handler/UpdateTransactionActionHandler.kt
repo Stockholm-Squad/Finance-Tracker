@@ -76,7 +76,7 @@ class UpdateTransactionActionHandler : ActionHandler {
     }
 
     private fun promptTransactionIndex(financialTrackerStorage: IFinancialTrackerStorage): Int? {
-        val transactions = financialTrackerStorage.getAllTransactions()  // Get all transactions
+        val transactions = financialTrackerStorage.getAllTransactions()
 
         if (transactions.isNullOrEmpty()) {
             println("No transactions found.")
@@ -88,22 +88,23 @@ class UpdateTransactionActionHandler : ActionHandler {
             println("${index + 1}. Category: ${transaction.category}, Type: ${transaction.type} Amount: ${transaction.amount}, Date: ${transaction.date}")
         }
 
-        println("Please enter the index of the transaction (1 to ${transactions.size}):")
-        val input = readlnOrNull()
+        while (true) {
+            println("Please enter the index of the transaction (1 to ${transactions.size}):")
+            val input = readlnOrNull()
 
-        if (input == null || !updateTransactionActionValidator.isValidateIndex(input)) {
-            println("Invalid input. Please enter a valid index.")
-            return null
+            if (input == null || !updateTransactionActionValidator.isValidateIndex(input)) {
+                println("Invalid input. Please enter a valid index.")
+                continue
+            }
+
+            val selectedIndex = input.toInt()
+            if (selectedIndex !in 1..transactions.size) {
+                println("Invalid input. Please enter a valid index between 1 and ${transactions.size}.")
+                continue
+            }
+
+            return selectedIndex
         }
-
-        val selectedIndex = input.toInt()
-
-        if (selectedIndex !in 1..transactions.size) {
-            println("Invalid input. Please enter a valid index between 1 and ${transactions.size}.")
-            return null
-        }
-
-        return selectedIndex
     }
 
     private fun promptUpdateChoice(): Int? {
@@ -129,19 +130,25 @@ class UpdateTransactionActionHandler : ActionHandler {
         selectedTransaction: Transaction,
         financialTrackerStorage: IFinancialTrackerStorage
     ): Boolean {
-        println(
-            "----------------------------------------------------- \n" +
-                    "Please input new Category:"
-        )
-        val newCategory = readlnOrNull()
+        var newCategory: String?
 
-        if (newCategory.isNullOrBlank() || !updateTransactionActionValidator.isValidateCategory(newCategory)) {
-            println("Invalid category. It cannot be blank.")
-            return false
+        while (true) {
+            println(
+                "----------------------------------------------------- \n" +
+                        "Please input new Category:"
+            )
+            newCategory = readlnOrNull()
+
+            if (!newCategory.isNullOrBlank() && updateTransactionActionValidator.isValidateCategory(newCategory)) {
+                break
+            }
+
+            println("Invalid category. Please enter a non-blank valid category.")
         }
 
-        return updateCategoryOfTransaction(newCategory, selectedTransaction, financialTrackerStorage)
+        return updateCategoryOfTransaction(newCategory!!, selectedTransaction, financialTrackerStorage)
     }
+
 
     private fun updateCategoryOfTransaction(
         newCategory: String,
@@ -164,21 +171,29 @@ class UpdateTransactionActionHandler : ActionHandler {
         selectedTransaction: Transaction,
         financialTrackerStorage: IFinancialTrackerStorage
     ): Boolean {
-        println(
-            "----------------------------------------------------- \n" +
-                    "Please choose number of what do you need \n" +
-                    "1. Income \n" +
-                    "2. Expenses \n" +
-                    "----------------------------------------"
-        )
-        val type = readlnOrNull()
-        if (type == null || !updateTransactionActionValidator.isValidateType(type)) {
-            println("Invalid type. Must choose (1. Income or 2. Expenses).")
-            return false
+        var type: String?
+
+        while (true) {
+            println(
+                "----------------------------------------------------- \n" +
+                        "Please choose number of what do you need \n" +
+                        "1. Income \n" +
+                        "2. Expenses \n" +
+                        "----------------------------------------"
+            )
+
+            type = readlnOrNull()
+
+            if (type != null && (type == "1" || type == "2")) {
+                break
+            }
+
+            println("Invalid input. Please enter 1 for Income or 2 for Expenses.")
         }
 
-        return updateTypeOfTransaction(type, selectedTransaction, financialTrackerStorage)
+        return updateTypeOfTransaction(type.toString(), selectedTransaction, financialTrackerStorage)
     }
+
 
     private fun updateTypeOfTransaction(
         newType: String,
@@ -208,18 +223,31 @@ class UpdateTransactionActionHandler : ActionHandler {
         selectedTransaction: Transaction,
         financialTrackerStorage: IFinancialTrackerStorage
     ): Boolean {
-        println(
-            "----------------------------------------------------- \n" +
-                    "Please enter new Amount:"
-        )
-        val newAmount = readlnOrNull()
+        var newAmount: String?
 
-        if (newAmount == null || !updateTransactionActionValidator.isValidateAmount(newAmount)) {
-            println("Invalid amount. Must be a positive number.")
+        while (true) {
+            println(
+                "----------------------------------------------------- \n" +
+                        "Please enter new Amount:"
+            )
+            newAmount = readlnOrNull()
+
+            if (newAmount != null && updateTransactionActionValidator.isValidateAmount(newAmount)) {
+                break
+            }
+
+            println("Invalid amount. Please enter a valid positive number.")
+        }
+
+        val amount = newAmount?.toDoubleOrNull()
+        if (amount == null) {
+            println("Failed to convert the entered amount to a valid number.")
             return false
         }
-        return updateTransactionAmount(newAmount.toDouble(), selectedTransaction, financialTrackerStorage)
+
+        return updateTransactionAmount(amount, selectedTransaction, financialTrackerStorage)
     }
+
 
     private fun updateTransactionAmount(
         newAmount: Double,

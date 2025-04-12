@@ -4,8 +4,7 @@ on:
   pull_request:
     branches: [ develop ]
     paths:
-      - 'src/update/validation/**'
-      - 'src/UpdateFinancialTrackerTest.kt'
+      - 'src/**'
 
 jobs:
   test:
@@ -27,17 +26,12 @@ jobs:
 
       - name: Run tests
         run: |
-          # Source files to compile
-          INTERFACE_FILE="src/update/validation/IUpdateTransactionActionValidator.kt"
-          IMPLEMENTATION_FILE="src/update/validation/UpdateTransactionActionValidator.kt"
-          TEST_FILE="src/UpdateFinancialTrackerTest.kt"
-          
-          # Compile using the defined paths
-          kotlinc $INTERFACE_FILE $IMPLEMENTATION_FILE $TEST_FILE -include-runtime -d finance_tracker.jar
+          # Compile all source files
+          find src -name "*.kt" | xargs kotlinc -include-runtime -d finance_tracker.jar
           
           # Run and process output
           echo "TEST_RESULTS<<EOF" >> $GITHUB_ENV
-          java -jar finance_tracker.jar | awk -v test_file="$TEST_FILE" '{
+          java -jar finance_tracker.jar | awk -v test_file="UpdateFinancialTrackerTest" '{
             if ($0 ~ /^Success/) {
               printf "::notice file=%s,title=Passed::%s\n", test_file, $0
             } else if ($0 ~ /^Failed/) {

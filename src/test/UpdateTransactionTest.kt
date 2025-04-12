@@ -11,47 +11,29 @@ import src.update.validation.UpdateTransactionActionValidator
 class UpdateTransactionTest() : TransactionTest() {
 
     private val updateTransactionActionValidator = UpdateTransactionActionValidator()
-    // just for test
-//    fun dummy(financialTrackerStorage: IFinancialTrackerStorage){
-//        financialTrackerStorage.addTransaction(Transaction(
-//            id = "1",
-//            amount = 1000.0,
-//            date = TransactionDate(1, TransactionMonth.APRIL,2023),
-//            category = "Food",
-//            type = TransactionType.EXPANSES
-//        ))
-//        financialTrackerStorage.addTransaction(Transaction(
-//            id = " 12 ",
-//            amount = 1000.0,
-//            date = TransactionDate(1, TransactionMonth.APRIL,2023),
-//            category = "Food",
-//            type = TransactionType.EXPANSES
-//        ))
-//    }
 
     override fun runTest() {
-//        dummy(MemoryFinancialTrackerStorage())
-        println("\n<-----------------Update Transactions Test-------------------->")
+        println("<------------------------ Update Transactions Test ---------------------------->")
 
         // region ID
 
-        println("\n-----------------ID--------------------")
+        println("\n-------------------- Index --------------------")
 
         /**
-         * Checkers for Valid (ID) */
+         * Checkers for Valid (Index) */
         check(
-            name = "When id is valid should return true",
+            name = "When index is valid should return true",
             result = updateTransactionActionValidator.isValidateIndex("1"),
             expectedResult = true
         )
 
         check(
-            name = "When id has empty space at start & end and is in the list should return true",
+            name = "When index has empty space at start & end and is in the list should return true",
             result = updateTransactionActionValidator.isValidateIndex(" 1 "),
             expectedResult = true
         )
         /**
-         * Checkers for InValid (ID) */
+         * Checkers for InValid (Index) */
         check(
             name = "When id has char should return false",
             result = updateTransactionActionValidator.isValidateIndex("a"),
@@ -59,37 +41,37 @@ class UpdateTransactionTest() : TransactionTest() {
         )
 
         check(
-            name = "When id has char at middle should return false",
+            name = "When index has char at middle should return false",
             result = updateTransactionActionValidator.isValidateIndex("123a45"),
             expectedResult = false
         )
 
         check(
-            name = "When id has space at middle should return false",
+            name = "When index has space at middle should return false",
             result = updateTransactionActionValidator.isValidateIndex("123 45"),
             expectedResult = false
         )
 
         check(
-            name = "When id has special character should return false",
+            name = "When index has special character should return false",
             result = updateTransactionActionValidator.isValidateIndex("123@45"),
             expectedResult = false
         )
 
         check(
-            name = "When id is out of range should return false",
+            name = "When index is out of range should return false",
             result = updateTransactionActionValidator.isValidateIndex("9874"),
             expectedResult = false
         )
 
         check(
-            name = "When id is out of range id < 1 should return false",
+            name = "When index is out of range id < 1 should return false",
             result = updateTransactionActionValidator.isValidateIndex("0"),
             expectedResult = false
         )
 
         check(
-            name = "When id is empty should return false",
+            name = "When index is empty should return false",
             result = updateTransactionActionValidator.isValidateIndex(""),
             expectedResult = false
         )
@@ -98,7 +80,7 @@ class UpdateTransactionTest() : TransactionTest() {
 
         // region Check Input
 
-        println("\n--------------Check Input----------------")
+        println("\n-------------------- Check Input --------------------")
 
         /**
          * Checkers for Valid Check Input */
@@ -163,7 +145,7 @@ class UpdateTransactionTest() : TransactionTest() {
 
         // region Category
 
-        println("\n----------------Category-----------------")
+        println("\n-------------------- Category --------------------")
 
         /**
          * Checkers for Valid Transaction Category */
@@ -205,11 +187,23 @@ class UpdateTransactionTest() : TransactionTest() {
             expectedResult = false
         )
 
+        check(
+            name = "When category digits out of range digits < 2 false",
+            result = updateTransactionActionValidator.isValidateCategory("a"),
+            expectedResult = false
+        )
+
+        check(
+            name = "When category digits out of range digits > 25 false",
+            result = updateTransactionActionValidator.isValidateCategory("food food food food food food food"),
+            expectedResult = false
+        )
+
         // endregion
 
         // region Type
 
-        println("\n------------------Type-------------------")
+        println("\n-------------------- Type --------------------")
 
         /**
          * Checkers for Valid Transaction Type */
@@ -267,7 +261,7 @@ class UpdateTransactionTest() : TransactionTest() {
 
         // region Amount
 
-        println("\n-----------------Amount------------------")
+        println("\n-------------------- Amount --------------------")
 
         /**
          * Checkers for Valid Transaction Amount */
@@ -331,7 +325,7 @@ class UpdateTransactionTest() : TransactionTest() {
 
         // region Date
 
-        println("\n------------------Date-------------------")
+        println("\n-------------------- Date --------------------")
 
         // Valid Day
         check(
@@ -408,7 +402,7 @@ class UpdateTransactionTest() : TransactionTest() {
             result = updateTransactionActionValidator.isValidateMonth("-3"),
             expectedResult = false
         )
-        println("<------------------------End of Update Transaction Test---------------------------->")
+        println("<------------------------ End of Update Transaction Test ---------------------------->")
 
     // endregion
 

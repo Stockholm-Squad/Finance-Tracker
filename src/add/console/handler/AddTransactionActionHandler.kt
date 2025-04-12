@@ -58,10 +58,10 @@ class AddTransactionActionHandler : ActionHandler {
         ) {
             val lastTransaction = financialTrackerStorage.getTransactionById(id.toString())
             println(
-                "Transaction Amount is  ${lastTransaction?.amount}\n" +
-                        "Transaction Date is ${lastTransaction?.date?.day}-${lastTransaction?.date?.month}-${lastTransaction?.date?.year}\n" +
-                        "Transaction Type is ${lastTransaction?.type}\n" +
-                        "Transaction Category ${lastTransaction?.category}"
+                "Transaction Amount is:  ${lastTransaction?.amount}\n" +
+                        "Transaction Date is: ${lastTransaction?.date?.day}-${lastTransaction?.date?.month}-${lastTransaction?.date?.year}\n" +
+                        "Transaction Type is: ${lastTransaction?.type}\n" +
+                        "Transaction Category: ${lastTransaction?.category}"
             )
         }
     }
@@ -83,7 +83,7 @@ class AddTransactionActionHandler : ActionHandler {
         while (true) {
             println("Please Enter the day of the transaction")
             println("Day should be a number")
-            val day = readln()
+            val day = readln().trim()
             if (validator.validateDay(day)) {
                 return day.toInt()
             } else {
@@ -109,7 +109,7 @@ class AddTransactionActionHandler : ActionHandler {
                         "11- November\n" +
                         "12- December"
             )
-            val month = readln()
+            val month = readln().trim()
             if (validator.validateMonth(month)) {
                 return month.toInt()
             } else {
@@ -126,7 +126,7 @@ class AddTransactionActionHandler : ActionHandler {
                 "1- Income\n" +
                         "2- Expanse"
             )
-            val type = readln()
+            val type = readln().trim()
             if (validator.validateType(type)) {
                 return type.toInt()
 
@@ -139,7 +139,7 @@ class AddTransactionActionHandler : ActionHandler {
     private fun handleCategory(): String {
         while (true) {
             println("Please Enter the Category of the transaction")
-            val category = readln()
+            val category = readln().trim()
             if (validator.validateCategory(category)) {
                 return category
             } else {

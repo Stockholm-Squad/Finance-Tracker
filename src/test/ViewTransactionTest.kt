@@ -10,30 +10,10 @@ import src.view_transaction.validation.IViewTransactionActionValidator
 import src.view_transaction.validation.ViewTransactionActionValidator
 
 class ViewTransactionTest : TransactionTest() {
-//    fun dummy(financialTrackerStorage: IFinancialTrackerStorage){
-//        financialTrackerStorage.addTransaction(Transaction(
-//            id = "1",
-//            amount = 1000.0,
-//            date = TransactionDate(1, TransactionMonth.APRIL,2023),
-//            category = "Food",
-//            type = TransactionType.EXPANSES
-//        ))
-//        financialTrackerStorage.addTransaction(Transaction(
-//            id = " 12 ",
-//            amount = 1000.0,
-//            date = TransactionDate(1, TransactionMonth.APRIL,2023),
-//            category = "Food",
-//            type = TransactionType.EXPANSES
-//        ))
-//    }
 
     override fun runTest() {
-//        dummy(MemoryFinancialTrackerStorage())
-//        MemoryFinancialTrackerStorage.Companion()
-        println("<------------------------View Transaction Test----------------------------------->")
-        // start region for view transaction
-        // get transaction by id
 
+        println("<------------------------ View Transaction Test ---------------------------->")
 
         check(
             name = "when user send valid id, return true",
@@ -88,8 +68,7 @@ class ViewTransactionTest : TransactionTest() {
 
 
         // end region for view transaction
-        println("<------------------------End of view Transaction Test---------------------------->")
-
+        println("<------------------------ End of View Transaction Test ---------------------------->")
     }
 
     private fun getTransactionById(id: String): Boolean {

@@ -24,21 +24,28 @@ jobs:
       - name: Set up Kotlin
         uses: fwilhe2/setup-kotlin@v1
 
-      - name: Run tests
+      - name: Compile and run tests
+        id: tests
         run: |
           # Compile all source files
-          find src -name "*.kt" | xargs kotlinc -include-runtime -d finance_tracker.jar
+          kotlinc $(find src -name "*.kt") -include-runtime -d finance_tracker.jar
           
-          # Run and process output
-          echo "TEST_RESULTS<<EOF" >> $GITHUB_ENV
-          java -jar finance_tracker.jar | awk -v test_file="UpdateFinancialTrackerTest" '{
-            if ($0 ~ /^Success/) {
-              printf "::notice file=%s,title=Passed::%s\n", test_file, $0
-            } else if ($0 ~ /^Failed/) {
-              printf "::error file=%s,title=Failed::%s\n", test_file, $0
-            }
-            print $0
-          }' >> $GITHUB_ENV
+          # Run tests and capture output
+          TEST_OUTPUT=$(java -jar finance_tracker.jar)
+          echo "$TEST_OUTPUT"
+          
+          # Count passed and failed tests
+          PASSED=$(echo "$TEST_OUTPUT" | grep -c '^Success')
+          FAILED=$(echo "$TEST_OUTPUT" | grep -c '^Failed')
+          
+          # Set outputs
+          echo "passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+          echo "total=$((PASSED + FAILED))" >> $GITHUB_OUTPUT
+          
+          # Save output for summary
+          echo "TEST_OUTPUT<<EOF" >> $GITHUB_ENV
+          echo "$TEST_OUTPUT" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Create test summary
@@ -47,17 +54,25 @@ jobs:
           echo "| Status | Test Name |" >> $GITHUB_STEP_SUMMARY
           echo "|--------|-----------|" >> $GITHUB_STEP_SUMMARY
           
-          echo "${{ env.TEST_RESULTS }}" | grep -E '^(Success|Failed)' | awk '{
-            status = ($1 == "Success") ? "✅ PASS" : "❌ FAIL";
-            test_name = substr($0, index($0,$2));
-            printf "| %s | %s |\n", status, test_name
-          }' >> $GITHUB_STEP_SUMMARY
+          # Process test output
+          echo "${{ env.TEST_OUTPUT }}" | grep -E '^(Success|Failed)' | while read -r line; do
+            status=$(echo "$line" | awk '{print $1}')
+            test_name=$(echo "$line" | cut -d' ' -f2-)
           
-          passed_count=$(echo "${{ env.TEST_RESULTS }}" | grep -c '^Success')
-          failed_count=$(echo "${{ env.TEST_RESULTS }}" | grep -c '^Failed')
+            if [ "$status" = "Success" ]; then
+              echo "| ✅ PASS | $test_name |" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "| ❌ FAIL | $test_name |" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
           
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Summary:**" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ $passed_count passed" >> $GITHUB_STEP_SUMMARY
-          echo "- ❌ $failed_count failed" >> $GITHUB_STEP_SUMMARY
-          echo "- 📊 $((passed_count + failed_count)) total tests" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ ${{ steps.tests.outputs.passed }} passed" >> $GITHUB_STEP_SUMMARY
+          echo "- ❌ ${{ steps.tests.outputs.failed }} failed" >> $GITHUB_STEP_SUMMARY
+          echo "- 📊 ${{ steps.tests.outputs.total }} total tests" >> $GITHUB_STEP_SUMMARY
+
+          # Fail the job if there were any test failures
+          if [ "${{ steps.tests.outputs.failed }}" -gt 0 ]; then
+            exit 1
+          fi

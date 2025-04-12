@@ -4,8 +4,9 @@ on:
   pull_request:
     branches: [ develop ]
     paths:
-      - 'src/common.console/FinancialTracker.kt'
-      - 'src/FinancialTrackerTest.kt'
+      - 'src/**'
+      - 'src/update/validation/IUpdateTransactionActionValidator.kt'
+      - 'src/UpdateFinancialTrackerTest.kt'
 
 jobs:
   test:
@@ -27,12 +28,12 @@ jobs:
 
       - name: Run tests
         run: |
-          # Single source of truth for file paths
-          MAIN_FILE="src/console/FinancialTracker.kt"
-          TEST_FILE="src/FinancialTrackerTest.kt"
+          # Source files to compile
+          INTERFACE_FILE="src/update/validation/IUpdateTransactionActionValidator.kt"
+          TEST_FILE="src/UpdateFinancialTrackerTest.kt"
           
           # Compile using the defined paths
-          kotlinc $MAIN_FILE $TEST_FILE -include-runtime -d finance_tracker.jar
+          kotlinc $INTERFACE_FILE $TEST_FILE -include-runtime -d finance_tracker.jar
           
           # Run and process output
           echo "TEST_RESULTS<<EOF" >> $GITHUB_ENV

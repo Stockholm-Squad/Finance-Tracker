@@ -15,13 +15,13 @@ class UpdateTransactionActionHandler : ActionHandler {
             val index = promptTransactionIndex(financialTrackerStorage)
 
             if (index == null) {
-                println("Returning to main menu.")
+                println("Returning to main menu. 🔄 See you there!")
                 break
             }
 
             val selectedTransaction = financialTrackerStorage.getAllTransactions()?.get(index - 1)
             if (selectedTransaction == null) {
-                println("Transaction not found.")
+                println("Oops! Transaction not found. 😕 Please check and try again.")
                 continue
             }
 
@@ -100,7 +100,7 @@ class UpdateTransactionActionHandler : ActionHandler {
 
             val selectedIndex = input.toInt()
             if (selectedIndex !in 1..transactions.size) {
-                println("Invalid input. Please enter a valid index between 1 and ${transactions.size}.")
+                println("Oops! Please enter a valid index between 1 and ${transactions.size}. 😕 Try again.")
                 continue
             }
 
@@ -121,7 +121,7 @@ class UpdateTransactionActionHandler : ActionHandler {
         )
         val choice = readlnOrNull()
         if (choice == null || !updateTransactionActionValidator.isValidOption(choice)) {
-            println("Invalid input. Please enter a number from 1 to 5.")
+            println("Oops! Please enter a number from 1 to 5. 😕 Try again.")
             return null
         }
         return choice.toInt()
@@ -136,7 +136,7 @@ class UpdateTransactionActionHandler : ActionHandler {
         while (true) {
             println(
                 "------------------------------------------------------------------------ \n" +
-                        "Please input new Category:"
+                        "Please input new Category ✍ : "
             )
             newCategory = readlnOrNull()
 
@@ -144,7 +144,7 @@ class UpdateTransactionActionHandler : ActionHandler {
                 break
             }
 
-            println("Invalid category. Please enter a value between 2 to 25.")
+            println("Category not acceptable. Please enter a value between 2 to 25 ❌")
         }
 
         return updateCategoryOfTransaction(newCategory!!, selectedTransaction, financialTrackerStorage)
@@ -162,7 +162,7 @@ class UpdateTransactionActionHandler : ActionHandler {
         if (categoryUpdatedSuccessfully) {
             println("Category updated to: $newCategory")
         } else {
-            println("Failed to update the category.")
+            println("Oops! Couldn't update the category. 😕 Please try again.")
         }
         return categoryUpdatedSuccessfully
     }
@@ -189,7 +189,7 @@ class UpdateTransactionActionHandler : ActionHandler {
                 break
             }
 
-            println("Invalid input. Please enter 1 for Income or 2 for Expenses.")
+            println("Oops! Please enter 1 for Income or 2 for Expenses. 😕 Try again.")
         }
 
         return updateTypeOfTransaction(type.toString(), selectedTransaction, financialTrackerStorage)
@@ -206,7 +206,7 @@ class UpdateTransactionActionHandler : ActionHandler {
             "1" -> selectedTransaction.copy(type = TransactionType.INCOME)
             "2" -> selectedTransaction.copy(type = TransactionType.EXPANSES)
             else -> {
-                println("Invalid type. Failed to update the Type.")
+                println("Invalid type. Failed to update the Type ❌")
                 return false
             }
         }
@@ -215,7 +215,7 @@ class UpdateTransactionActionHandler : ActionHandler {
         if (typeUpdatedSuccessfully) {
             println("Type updated to: ${updatedTransaction.type}")
         } else {
-            println("Failed to update the type.")
+            println("Oops! Couldn't update the type. 😕")
         }
         return typeUpdatedSuccessfully
     }
@@ -237,12 +237,12 @@ class UpdateTransactionActionHandler : ActionHandler {
                 break
             }
 
-            println("Invalid amount. Please enter a valid positive number.")
+            println("Oops! The amount seems incorrect. 😕 Please enter a valid positive number.")
         }
 
         val amount = newAmount?.toDoubleOrNull()
         if (amount == null) {
-            println("Failed to convert the entered amount to a valid number.")
+            println("Oops! Please try again, couldn't update the amount 😕")
             return false
         }
 
@@ -261,7 +261,7 @@ class UpdateTransactionActionHandler : ActionHandler {
         if (success) {
             println("Amount updated to: $newAmount")
         } else {
-            println("Failed to update the amount.")
+            println("Oops! Couldn't update the amount. 😕 Please check and try again.")
         }
         return success
     }
@@ -295,7 +295,7 @@ class UpdateTransactionActionHandler : ActionHandler {
         if (success) {
             println("Date updated to: $newDate")
         } else {
-            println("Failed to update the date.")
+            println("Oops! Couldn't update the date. 😕 Please try again.")
         }
 
         return success
@@ -316,7 +316,7 @@ class UpdateTransactionActionHandler : ActionHandler {
                 day = input.toInt()
                 isValid = true
             } else {
-                println("Invalid day value. Day must be between 1 and 31.")
+                println("Oops! The day must be between 1 and 31. 😕 Please try again.")
             }
         }
         return day
@@ -336,7 +336,7 @@ class UpdateTransactionActionHandler : ActionHandler {
                 month = input.toInt()
                 isValid = true
             } else {
-                println("Invalid month value. Month must be between 1 and 12.")
+                println("Oops! The month must be between 1 and 12. 😕 Please try again.")
             }
         }
         return month

@@ -17,20 +17,20 @@ class ConsoleHandler {
     private val helper = DisplayTransactions(financialTrackerStorage.getAllTransactions()!!)
     fun welcomeMessage() {
         while (true) {
-            "------------------------------------------------------------------------ \n" +
-                    "------------------------------------------------------------------------ \n" +
-                    println(
+            println(
+                "------------------------------------------------------------------------ \n" +
+                        "------------------------------------------------------------------------ \n" +
                         "Welcome to Finance Tracker System \n" +
-                                "Please choose number for what do you need \n" +
-                                "1. Add Transaction\n" +
-                                "2. View Transaction \n" +
-                                "3. Edit Transaction \n" +
-                                "4. Delete Transaction \n" +
-                                "5. Provide Monthly Report \n" +
-                                "6. Exit \n" +
-                                "------------------------------------------------------------------------ "
+                        "Please choose number for what do you need \n" +
+                        "1. Add Transaction\n" +
+                        "2. View Transaction \n" +
+                        "3. Edit Transaction \n" +
+                        "4. Delete Transaction \n" +
+                        "5. Provide Monthly Report \n" +
+                        "6. Exit \n" +
+                        "------------------------------------------------------------------------ "
 
-                    )
+            )
             val choice = readlnOrNull()
             when (choice) {
                 "1" -> AddTransactionActionHandler().handleAction(financialTrackerStorage)

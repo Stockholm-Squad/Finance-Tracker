@@ -12,7 +12,10 @@ class TransactionReportActionHandler(
 ) : ActionHandler {
 
     override fun handleAction(financialTrackerStorage: IFinancialTrackerStorage) {
-        println("Please Enter Month to view Monthly Report : ")
+        println(
+            "------------------------------------------------------------------------ \n" +
+                    "Please Enter Month to view Monthly Report : "
+        )
         println(
             "like ${TransactionMonth.JANUARY.orderId}.${TransactionMonth.JANUARY.name}" +
                     ", ${TransactionMonth.FEBRUARY.orderId}.${TransactionMonth.FEBRUARY.name}" +

@@ -6,6 +6,7 @@ fun main() {
     val viewTransactionTest = ViewTransactionTest()
     val deleteTransactionTest = DeleteTransactionTest()
     val monthlyReportTest = MonthlyReportTest()
+
     addTransactionTest.runTest()
     updateTransactionTest.runTest()
     viewTransactionTest.runTest()

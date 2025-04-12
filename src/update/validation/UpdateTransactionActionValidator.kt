@@ -17,7 +17,7 @@ class UpdateTransactionActionValidator(): IUpdateTransactionActionValidator {
         }
         return selectedIndex.all { it.isDigit() }
                 && selectedIndex.isNotEmpty()
-                && selectedIndex.toInt() in 1..transactions.size
+                && selectedIndex.trim().toInt() in 1..transactions.size
     }
 
     override fun isValidOption(option: String): Boolean {

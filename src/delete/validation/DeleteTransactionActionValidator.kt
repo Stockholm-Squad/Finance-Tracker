@@ -6,7 +6,10 @@ import src.storage.IFinancialTrackerStorage
 class DeleteTransactionActionValidator : IDeleteTransactionActionValidator {
 
     override fun checkConfirmation(): Boolean {
-        println("Are you sure you want to delete this transaction? (y/n)")
+        println(
+            "------------------------------------------------------------------------ \n" +
+                    "Are you sure you want to delete this transaction? (y/n) ❓"
+        )
         val input = readLine()
         input?.let {
             return it.toLowerCase() == "y"

@@ -15,17 +15,24 @@ class ViewTransactionActionHandler : ActionHandler {
         }
 
         while (true) {
-            println("\nHere are all transactions:")
-            println("----------------------------------------------")
+            println(
+                "------------------------------------------------------------------------ \n" +
+                        "Here are all transactions:" +
+                        "---------------------------- \n"
+            )
             transactions.forEachIndexed { index, transaction ->
-                println("${index + 1}. ${transaction.category} ${transaction.amount} EGP ${transaction.date.day}/${transaction.date.month}/${transaction.date.year}")
+                println("${index + 1}. ${transaction.category} ${transaction.amount} ${transaction.date.day}/${transaction.date.month}/${transaction.date.year}")
             }
 
-            println("\nWhich transaction would you like to view? (or 'q' to quit)")
+            println(
+                "------------------------------------------------------------------------ \n" +
+                        "Which transaction would you like to view? (or 'q' to quit)"
+            )
             val choice = readlnOrNull() ?: continue
 
 
             when {
+                choice == "q" -> return
                 !viewTransactionActionValidator.validateId(choice) -> {
                     println("You didn't choose 😢..Try Again")
                     continue
@@ -50,8 +57,8 @@ class ViewTransactionActionHandler : ActionHandler {
             println("Category / ${transaction.category}\nAmount / ${transaction.amount} EGP\nDate / 0${transaction.date.day}/${transaction.date.month}/${transaction.date?.year}\nType / ${transaction.type}\n")
 
             println("\nWould you like to view more transactions? (y/n)")
-            val breakOrContinueChoice = readlnOrNull()
-            if (breakOrContinueChoice == "n")
+            val breakOrContinueChoice = readlnOrNull()?.trim()?.lowercase()
+            if (breakOrContinueChoice != "y")
                 return
         }
     }

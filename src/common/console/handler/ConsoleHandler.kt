@@ -2,6 +2,7 @@ package src.common.console.handler
 
 import src.add.console.handler.AddTransactionActionHandler
 import src.common.helper.display.DisplayTransactions
+import src.common.helper.display.IDisplayTransaction
 import src.delete.handler.DeleteTransactionActionHandler
 import src.delete.validation.DeleteTransactionActionValidator
 import src.report.handler.TransactionReportActionHandler
@@ -15,11 +16,40 @@ import src.view_transaction.handler.ViewTransactionActionHandler
 import update.handler.UpdateTransactionActionHandler
 
 class ConsoleHandler {
-    private val financialTrackerStorage: IFinancialTrackerStorage = FileFinancialTrackerStorage(
-        FileHelper("src/financialTracker.txt")
-    )
-    private val helper = DisplayTransactions(financialTrackerStorage.getAllTransactions()!!)
+    private lateinit var financialTrackerStorage: IFinancialTrackerStorage
+    private lateinit var helper : IDisplayTransaction
+
+    init {
+
+    }
+    fun selectStorageType() {
+
+        println("Select Storage Type: \n1. Memory \n2. File")
+        val input = readlnOrNull()
+        while(true){
+            when (input) {
+                "1" -> {handleMemoryStorage();break}
+                "2" -> {handleFileStorage();break}
+                else -> {
+                    println("Invalid Input")
+                    continue
+                }
+            }
+        }
+    }
+
+    fun handleMemoryStorage() {
+        financialTrackerStorage = MemoryFinancialTrackerStorage()
+        welcomeMessage()
+    }
+
+    fun handleFileStorage() {
+        financialTrackerStorage = FileFinancialTrackerStorage(FileHelper("src/financialTracker.txt"))
+        welcomeMessage()
+    }
+
     fun welcomeMessage() {
+        helper = DisplayTransactions(financialTrackerStorage.getAllTransactions()!!)
         while (true) {
             println(
                 "------------------------------------------------------------------------ \n" +
@@ -53,5 +83,5 @@ class ConsoleHandler {
 }
 
 fun main() {
-    ConsoleHandler().welcomeMessage()
+    ConsoleHandler().selectStorageType()
 }

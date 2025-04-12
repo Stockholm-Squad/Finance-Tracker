@@ -40,6 +40,7 @@ class FileFinancialTrackerStorage(
             fileHelper.saveTransactions(allTransaction?.toList())
             return true
         } catch (throwable: Throwable) {
+            println(throwable.message)
             return false
         }
     }
